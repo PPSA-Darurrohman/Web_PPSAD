@@ -176,12 +176,12 @@ function showNotif() {
   }, 3000);
 }
 
-document.getElementById("formSantri").addEventListener("submit"), function(e) {
+document.getElementById("formSantri").addEventListener("submit", function(e) {
   e.preventDefault();
 
   const form = e.target;
-}
- const data = {
+
+  const data = {
     nama: form.nama.value,
     wali: form.wali.value,
     kk: form.kk.value,
@@ -198,16 +198,13 @@ document.getElementById("formSantri").addEventListener("submit"), function(e) {
   })
   .then(() => {
 
-  // ✅ Tampilkan notif
-  showNotif();
+    showNotif();
 
-  // 📱 Tentukan nomor admin
-  let noAdmin = (data.jenis_kelamin === "Putra") 
-    ? "6282264929307" 
-    : "6281230109050";
+    let noAdmin = (data.jenis_kelamin === "Putra") 
+      ? "6282264929307" 
+      : "6281230109050";
 
-  // 📩 Format pesan WA (rapi & aman)
-  let pesan = `*PENDAFTARAN SANTRI BARU*
+    let pesan = `*PENDAFTARAN SANTRI BARU*
 Nama: ${data.nama}
 Wali: ${data.wali}
 KK: ${data.kk}
@@ -216,17 +213,15 @@ TTL: ${data.tempat_lahir}, ${data.tanggal_lahir}
 Jenis: ${data.jenis_kelamin}
 Alamat: ${data.alamat}`;
 
-  // 🔐 Encode supaya tidak error di URL
-  let encodedPesan = encodeURIComponent(pesan);
+    let encodedPesan = encodeURIComponent(pesan);
 
-  // ⏳ Delay agar notif terlihat dulu
-  setTimeout(() => {
-    window.location.href = `https://wa.me/${noAdmin}?text=${encodedPesan}`;
-  }, 1500);
+    setTimeout(() => {
+      window.location.href = `https://wa.me/${noAdmin}?text=${encodedPesan}`;
+    }, 1500);
 
-  // 🔄 Reset form
-  form.reset();
-})
+    form.reset();
+  });
+});
 </script>
 </body>
 </html>
