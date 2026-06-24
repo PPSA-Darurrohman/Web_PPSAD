@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dokumentasi Kegiatan</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  overflow-x: hidden;
+  background: linear-gradient(135deg, #d4d4d4, #b9c6e2, #acaafd);
+}
+
+.grid {
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+}.card {
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+/* HEADER */
+.header {
+  text-align: center;
+  padding: 25px 15px;
+}
+
+.header h1 {
+  font-size: 26px;
+  color: #0d47a1;
+}
+
+/* TABS */
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 0 10px;
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 20px;
+  background: #e3eafc;
+  color: #0d47a1;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.tabs button.active {
+  background: #0d47a1;
+  color: #fff;
+}
+
+/* GRID RESPONSIVE */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  padding: 15px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* CARD */
+.card {
+  position: relative;
+  border-radius:20px;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+/* IMAGE */
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: 0.3s;
+}
+
+/* OVERLAY */
+.overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  color: #fff;
+}
+
+.overlay span {
+  font-size: 10px;
+}
+
+.overlay h3 {
+  font-size: 16px;
+}
+
+/* ICON */
+.icon-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 50%;
+  padding: 10px;
+  font-size: 10px;
+}
+
+/* HOVER */
+.card:hover img {
+  transform: scale(1.05);
+}
+
+/* MODAL */
+.image-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.9);
+}
+
+.image-modal img {
+  max-width: 90%;
+  max-height: 80vh;
+  display: block;
+  margin: 60px auto;
+  border-radius: 10px;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-size: 25px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .card img {
+    height: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 20px;
+  }
+
+  .card img {
+    height: 130px;
+  }
+
+  .overlay h3 {
+    font-size: 14px;
+  }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+  <h1>Dokumentasi Kegiatan</h1>
+</div>
+
+<div class="tabs">
+  <button class="active" onclick="filterData(event,'all')">Seluruh Kegiatan</button>
+  <button onclick="filterData(event,'putra')">Putra</button>
+  <button onclick="filterData(event,'putri')">Putri</button>
+</div>
+<!--Putra-->
+<div class="grid">
+
+  <a href="#" class="card putra">
+    <img src="assets/Dokoumentasi/Putra/jama'ah.webp">
+    <div class="overlay">
+      <span>Pondok Putra</span>
+      <h3>Sholat Berjama'ah</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putra/jama'ah.webp">🔍</div>
+  </a>
+
+  <a href="#" class="card putra">
+    <img src="assets/Dokoumentasi/Putra/diba'.webp">
+    <div class="overlay">
+      <span>Pondok Putra</span>
+      <h3>Jam'iyyah Maulid Ad Diba'i</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putra/diba'.webp">🔍</div>
+  </a>
+
+  <a href="#" class="card putra">
+    <img src="assets/Dokoumentasi/Putra/simtut_duror.webp">
+    <div class="overlay">
+      <span>Pondok Putra</span>
+      <h3>Jam'iyyah Maulid Simtut Duror</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putra/simtut_duror.webp">🔍</div>
+  </a>
+
+  <a href="#" class="card putra">
+    <img src="assets/Dokoumentasi/Putra/muslamfiq.webp">
+    <div class="overlay">
+      <span>Pondok Putra</span>
+      <h3>Musyawaroh Sullam At Taufiq</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putra/muslamfiq.webp">🔍</div>
+  </a>
+<!--Putri-->
+  <a href="#" class="card putri">
+    <img src="assets/Dokoumentasi/Putri/bin-nadzor-ba'da-shubuh.webp" loading="lazy">
+    <div class="overlay">
+      <span>Pondok Putri</span>
+      <h3>Ngaji Bin Nadzor Ba'da Shubuh</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putri/bin nadzor ba'da shubuh.webp">🔍</div>
+  </a>
+
+  <a href="#" class="card putri">
+    <img src="assets/Dokoumentasi/Putri/tafsir.webp"loading="lazy">
+    <div class="overlay">
+      <span>Pondok Putri</span>
+      <h3>Pengajian Tafsir Jalalain</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putri/tafsir.webp">🔍</div>
+  </a>
+
+  <a href="#" class="card putri">
+    <img src="assets/Dokoumentasi/Putri/pengajian-tausyekh.webp"  loading="lazy">
+    <div class="overlay">
+      <span>Pondok Putri</span>
+      <h3> Pengajian Kitab Tausyekh</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putri/pengajian-tausyekh.webp">🔍</div>
+  </a>
+
+  <a href="#" class="card putri">
+    <img src="assets/Dokoumentasi/Putri/kursus_pagi.webp">
+    <div class="overlay">
+      <span>Pondok Putri</span>
+      <h3>Kursus Pagi</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putri/kursus_pagi.webp">🔍</div>
+  </a>
+
+  <a href="#" class="card putri">
+    <img src="assets/Dokoumentasi/Putri/persiapan-setoran.webp"loading="lazy">
+    <div class="overlay">
+      <span>Pondok Putri</span>
+      <h3>Persiapan Setoran Al Qur'an</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putri/persiapan-setoran.webp">🔍</div>
+  </a>
+
+  <a href="#" class="card putri">
+    <img src="assets/Dokoumentasi/Putri/sorogan.webp"loading="lazy">
+    <div class="overlay">
+      <span>Pondok Putri</span>
+      <h3>Sorogan</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putri/sorogan.webp">🔍</div>
+  </a>
+
+  <a href="#" class="card putri">
+    <img src="assets/Dokoumentasi/Putri/setoran.webp"loading="lazy">
+    <div class="overlay">
+      <span>Pondok Putri</span>
+      <h3>Setoran Al Qur'an</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putri/setoran.webp">🔍</div>
+  </a>
+
+  <a href="#" class="card putri">
+    <img src="assets/Dokoumentasi/Putri/kbm.webp"loading="lazy">
+    <div class="overlay">
+      <span>Madrasah Hidayatul Mubtadi-ien</span>
+      <h3>Kegiatan Belajar Mengajar</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putri/kbm.webp">🔍</div>
+  </a>
+
+  <a href="#" class="card putri">
+    <img src="assets/Dokoumentasi/Putri/simaan.webp"loading="lazy">
+    <div class="overlay">
+      <span>Pondok Putri</span>
+      <h3>Simaan Al Qur'an</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putri/simaan.webp">🔍</div>
+  </a>
+
+  <a href="#" class="card putri">
+    <img src="assets/Dokoumentasi/Putri/marhalah.webp"loading="lazy">
+    <div class="overlay">
+      <span>Pondok Putri</span>
+      <h3>Marhalah Kubro</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putri/marhalah.webp">🔍</div>
+  </a>
+
+  <a href="#" class="card putri">
+    <img src="assets/Dokoumentasi/Putri/burdah.webp"loading="lazy">
+    <div class="overlay">
+      <span>Pondok Putri</span>
+      <h3>Burdah</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putri/burdah.webp">🔍</div>
+  </a>
+
+  <a href="#" class="card putri">
+    <img src="assets/Dokoumentasi/Putri/sholawat.webp"loading="lazy">
+    <div class="overlay">
+      <span>Pondok Putri</span>
+      <h3>Membaca Sholawat 1500</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putri/sholawat.webp">🔍</div>
+  </a>
+
+  <a href="#" class="card putri">
+    <img src="assets/Dokoumentasi/Putri/muqoddaman.webp"loading="lazy">
+    <div class="overlay">
+      <span>Pondok Putri</span>
+      <h3>Muqoddaman</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putri/muqoddaman.webp">🔍</div>
+  </a>
+
+  <a href="#" class="card putri">
+    <img src="assets/Dokoumentasi/Putri/wb.webp"loading="lazy">
+    <div class="overlay">
+      <span>Pondok Putri</span>
+      <h3>Wajib Belajar</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putri/wb.webp">🔍</div>
+  </a>
+
+  <a href="#" class="card putri">
+    <img src="assets/Dokoumentasi/Putri/pra-musyawaroh.webp"loading="lazy">
+    <div class="overlay">
+      <span>Pondok Putri</span>
+      <h3>Pra Musyawaroh</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putri/pra-musyawaroh.webp">🔍</div>
+  </a>
+
+  <a href="#" class="card putri">
+    <img src="assets/Dokoumentasi/Putri/masyfaqi.webp"loading="lazy">
+    <div class="overlay">
+      <span>Pondok Putri</span>
+      <h3>Musyawaroh Fath Al Qorib Putri</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putri/masyfaqi.webp">🔍</div>
+  </a>
+
+  <a href="#" class="card putri">
+    <img src="assets/Dokoumentasi/Putri/jam'iyyah.webp"loading="lazy">
+    <div class="overlay">
+      <span>Pondok Putri</span>
+      <h3>Jam'iyyah Ad Diba'i</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putri/jam'iyyah.webp">🔍</div>
+  </a>
+
+  <a href="#" class="card putri">
+    <img src="assets/Dokoumentasi/Putri/muhafadzoh.webp">
+    <div class="overlay">
+      <span>Madrasah Hidayatul Mubtadi-ien</span>
+      <h3>Muhafadzoh</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putri/muhafadzoh.webp">🔍</div>
+  </a>
+
+  <a href="#" class="card putri">
+    <img src="assets/Dokoumentasi/Putri/paktab.webp"loading="lazy">
+    <div class="overlay">
+      <span>Madrasah Hidayatul Mubtadi-ien</span>
+      <h3>Koreksian Kitab</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putri/paktab.webp">🔍</div>
+  </a>
+
+  <a href="#" class="card putri">
+    <img src="assets/Dokoumentasi/Putri/ujian.webp"loading="lazy">
+    <div class="overlay">
+      <span>Madrasah Hidayatul Mubtadi-ien</span>
+      <h3>Ujian</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putri/ujian.webp">🔍</div>
+  </a>
+
+  <a href="#" class="card putri">
+    <img src="assets/Dokoumentasi/Putri/seminar_pendidikan.webp"loading="lazy">
+    <div class="overlay">
+      <span>Pondok Putri</span>
+      <h3>Seminar Pendidikan</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putri/seminar_pendidikan.webp">🔍</div>
+  </a>
+
+  <a href="#" class="card putri">
+    <img src="assets/Dokoumentasi/Putri/ekstra_banjari.webp"loading="lazy">
+    <div class="overlay">
+      <span>Pondok Putri</span>
+      <h3>Ekstra Banjari</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putri/ekstra_banjari.webp">🔍</div>
+  </a>
+
+   <a href="#" class="card putri">
+    <img src="assets/Dokoumentasi/Putri/ekstra_sholawat.webp"loading="lazy">
+    <div class="overlay">
+      <span>Pondok Putri</span>
+      <h3>Ekstra Sholawat</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putri/ekstra_sholawat.webp">🔍</div>
+  </a>
+
+  <a href="#" class="card putri">
+    <img src="assets/Dokoumentasi/Putri/harlah.webp"loading="lazy">
+    <div class="overlay">
+      <span>Pondok Putri</span>
+      <h3>Harlah Pondok</h3>
+    </div>
+    <div class="icon-btn zoom-btn" data-img="assets/Dokoumentasi/Putri/harlah.webp">🔍</div>
+  </a>
+</div>
+
+<!-- MODAL -->
+
+<div id="modal" class="image-modal">
+  <span class="close-btn">&times;</span>
+  <img id="modalImg">
+</div>
+
+<script>
+function filterData(e, kategori) {
+  const cards = document.querySelectorAll('.card');
+  const buttons = document.querySelectorAll('.tabs button');
+
+  buttons.forEach(btn => btn.classList.remove('active'));
+  e.target.classList.add('active');
+
+  cards.forEach(card => {
+    card.style.display =
+      kategori === 'all' || card.classList.contains(kategori)
+        ? ''
+        : 'none';
+  });
+}
+
+const modal = document.getElementById("modal");
+const modalImg = document.getElementById("modalImg");
+
+document.querySelectorAll(".zoom-btn").forEach(btn => {
+  btn.onclick = function(e){
+    e.preventDefault();
+    e.stopPropagation();
+    modal.style.display = "block";
+    modalImg.src = this.dataset.img;
+  };
+});
+
+document.querySelector(".close-btn").onclick = () => modal.style.display = "none";
+
+modal.onclick = (e) => {
+  if (e.target !== modalImg) modal.style.display = "none";
+};
+</script>
+
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pendaftaran Santri</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* BODY */
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #74b9ff, #6c5ce7);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* CONTAINER */
+.container {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(15px);
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  color: white;
+  animation: fadeIn 0.8s ease;
+  
+}
+
+/* TITLE */
+h2 {
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+/* INPUT */
+input, select, textarea {
+  width: 100%;
+  padding: 10px 12px;
+  margin: 6px 0;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  font-size: 14px;
+}
+
+/* TEXTAREA */
+textarea {
+  resize: none;
+  height: 80px;
+}
+
+/* BUTTON */
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 10px;
+  background: #0984e3;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #74b9ff;
+}
+
+/* ANIMATION */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 📱 MOBILE */
+@media (max-width: 480px) {
+  .container {
+    padding: 20px;
+    border-radius: 15px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  input, select, textarea {
+    font-size: 13px;
+    padding: 9px;
+  }
+
+  button {
+    padding: 11px;
+  }
+}
+
+/* 📟 TABLET */
+@media (min-width: 481px) and (max-width: 768px) {
+  .container {
+    max-width: 500px;
+  }
+}
+
+/* 💻 DESKTOP */
+@media (min-width: 769px) {
+  .container {
+    max-width: 420px;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>Pendaftaran Santri</h2>
+    <div id="notif" style="display:none; background:#00b894; padding:10px; border-radius:8px; margin-bottom:10px; text-align:center;">
+      ✅ Pendaftaran berhasil!
+    </div>
+  <form id="formSantri">
+    <input type="text" name="nama" placeholder="Nama Lengkap" required>
+    <input type="text" name="wali" placeholder="Nama Wali" required>
+    <input type="number" name="kk" placeholder="No KK" required>
+    <input type="number" name="nik" placeholder="NIK" required>
+    <input type="text" name="tempat_lahir" placeholder="Tempat Lahir" required>
+    <input type="text" name="tanggal_lahir" placeholder="Tanggal Lahir" required>
+
+    <select name="jenis_kelamin" required>
+      <option value="">Jenis Kelamin</option>
+      <option value="Putra">Putra</option>
+      <option value="Putri">Putri</option>
+    </select>
+
+    <textarea name="alamat" placeholder="Alamat" required></textarea>
+
+    <button type="submit">Daftar Sekarang</button>
+  </form>
+      <p style="font-size:12px; text-align:center; margin-top:8px;">
+        📱 Setelah klik daftar, Anda akan diarahkan ke WhatsApp untuk konfirmasi
+      </p>
+
+</div>
+
+<script>
+const scriptURL = "https://script.google.com/macros/s/AKfycbxCN7dGgJDGOmRozLXoD0AY6P0nYsvjYjQ-GXWoF2MWPdYP9r9UMeOTC6QFenbLsVtZ4A/exec";
+
+function showNotif() {
+  let notif = document.getElementById("notif");
+  notif.style.display = "block";
+
+  setTimeout(() => {
+    notif.style.display = "none";
+  }, 3000);
+}
+
+document.getElementById("formSantri").addEventListener("submit"), function(e) {
+  e.preventDefault();
+
+  const form = e.target;
+}
+ const data = {
+    nama: form.nama.value,
+    wali: form.wali.value,
+    kk: form.kk.value,
+    nik: form.nik.value,
+    tempat_lahir: form.tempat_lahir.value,
+    tanggal_lahir: form.tanggal_lahir.value,
+    jenis_kelamin: form.jenis_kelamin.value,
+    alamat: form.alamat.value
+  };
+
+  fetch(scriptURL, {
+    method: "POST",
+    body: JSON.stringify(data)
+  })
+  .then(() => {
+
+  // ✅ Tampilkan notif
+  showNotif();
+
+  // 📱 Tentukan nomor admin
+  let noAdmin = (data.jenis_kelamin === "Putra") 
+    ? "6282264929307" 
+    : "6281230109050";
+
+  // 📩 Format pesan WA (rapi & aman)
+  let pesan = `*PENDAFTARAN SANTRI BARU*
+Nama: ${data.nama}
+Wali: ${data.wali}
+KK: ${data.kk}
+NIK: ${data.nik}
+TTL: ${data.tempat_lahir}, ${data.tanggal_lahir}
+Jenis: ${data.jenis_kelamin}
+Alamat: ${data.alamat}`;
+
+  // 🔐 Encode supaya tidak error di URL
+  let encodedPesan = encodeURIComponent(pesan);
+
+  // ⏳ Delay agar notif terlihat dulu
+  setTimeout(() => {
+    window.location.href = `https://wa.me/${noAdmin}?text=${encodedPesan}`;
+  }, 1500);
+
+  // 🔄 Reset form
+  form.reset();
+})
+</script>
+</body>
+</html>
