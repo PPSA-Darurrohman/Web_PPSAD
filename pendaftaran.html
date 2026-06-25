@@ -50,12 +50,54 @@ button {
   border: none;
   border-radius: 10px;
   cursor: pointer;
+}.loading-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.loading-box {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.loading-box p {
+  margin-top: 10px;
+  color: #333;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #ddd;
+  border-top: 4px solid #0984e3;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 </style>
 </head>
 
 <body>
-
+<div id="loadingPopup" class="loading-popup">
+  <div class="loading-box">
+    <div class="spinner"></div>
+    <p>Memproses pendaftaran...</p>
+  </div>
+</div>
 <div class="container">
   <h2>Pendaftaran Santri</h2>
 
@@ -86,6 +128,14 @@ button {
 <script>
 const scriptURL = "https://script.google.com/macros/s/AKfycbxCN7dGgJDGOmRozLXoD0AY6P0nYsvjYjQ-GXWoF2MWPdYP9r9UMeOTC6QFenbLsVtZ4A/exec";
 
+function showLoading() {
+  document.getElementById("loadingPopup").style.display = "flex";
+}
+
+function hideLoading() {
+  document.getElementById("loadingPopup").style.display = "none";
+}
+
 function showNotif() {
   const notif = document.getElementById("notif");
   notif.style.display = "block";
@@ -94,6 +144,8 @@ function showNotif() {
 
 document.getElementById("formSantri").addEventListener("submit", function(e) {
   e.preventDefault();
+  showLoading(); // 🔥 tampilkan loading
+
   const form = e.target;
 
   const data = {
@@ -112,6 +164,7 @@ document.getElementById("formSantri").addEventListener("submit", function(e) {
     body: JSON.stringify(data)
   }).then(() => {
 
+    hideLoading(); // 🔥 hilangkan loading
     showNotif();
 
     const noAdmin = data.jenis_kelamin === "Putra"
@@ -132,6 +185,9 @@ Alamat: ${data.alamat}`;
     }, 1500);
 
     form.reset();
+  }).catch(() => {
+    hideLoading();
+    alert("Terjadi kesalahan, coba lagi!");
   });
 });
 </script>

@@ -3180,27 +3180,6 @@ section,
   z-index: 999;
   position: relative;
 }
-/* ===== FIX SIDEBAR ===== */
-#header {
-  z-index: 9999;
-}
-
-.navmenu {
-  position: fixed;
-  top: 0;
-  left: -300px;
-  width: 260px;
-  height: 100%;
-  background: #0d1750;
-  padding: 20px;
-  transition: 0.3s;
-  z-index: 9999;
-  overflow-y: auto;
-}
-
-.navmenu.active {
-  left: 0;
-}
 
 /* Overlay saat sidebar buka */
 .sidebar-overlay {

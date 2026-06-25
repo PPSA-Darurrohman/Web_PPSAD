@@ -64,33 +64,50 @@
 .entry-links {
   pointer-events: auto;
 }h2 {
-  font-size: 28px;
+  font-size: 20px;
 }
 p {
   font-size: 14px;
 }
-#contact .contact-text {
-  font-size: 12px !important;
-  line-height: 1.4;
+#contact {
+  color: white;
 }
-#contact h4 {
-  font-size: 16px !important;
+#contact i {
+  font-size: 14px !important;
 }
-#contact p {
-  font-size: 13px !important;
+#contact a {
+  color: white !important;
+  text-decoration: none;
+}table {
+  font-size: 13px;
 }
-#contact .contact-icon {
-  width: 30px !important;
-  height: 30px !important;
+th, td {
+  padding: 6px;
+}.contact-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
 }
-#contact .contact-icon i {
-  font-size: 12px !important;
+.contact-item i {
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+  line-height: 40px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 50%;
+  text-align: center;
+  margin-right: 15px;
+}
+.contact-item p {
+  color: #dbeafe; 
+  margin: 0;
+}.contact-item h4 {
+  color: white;
 }
   </style>
 </head>
 
 <body class="index-page">
-<div class="sidebar-overlay" id="overlay"></div>  
   <header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid position-relative d-flex align-items-center justify-content-between">
 
@@ -330,7 +347,7 @@ p {
                       <li>Menyerahkan foto calon santri baru, ukuran 3x4 (2 lembar)</li>
                       <li>Menyerahkan foto copy Kartu Keluarga (KK) 3 lembar</li>
                       <li>Melunasi administrasi pendaftaran</li>
-                      <h6>*Memakai opyah hitam dan baju putih lengan panjang (Putra)</h6>
+                      <h6>*Memakai kopyah hitam dan baju putih lengan panjang (Putra)</h6>
                       <h6>*Memakai kerudung hitam  dan baju putih (Putri) </h6>
                     </ul>
                   </div>
@@ -381,8 +398,8 @@ p {
 
           <div class="col-lg-6" data-aos="fade-left" data-aos-delay="200">
             <div class="education-section">
-              <div class="section-header">
-                <h4><p>💰 Pembayaran</p></h4>
+              <div class="card-body">
+                <h1><p>💰 Pembayaran</p></h1>
                 <p class="section-subtitle">Rincian pembayaran sebagai berikut</p>
               </div>
 
@@ -396,7 +413,7 @@ p {
 
     <div class="card shadow-lg border-0 rounded-4 p-4 mb-5">
       
-      <h3 class="text-center fw-bold mb-4">
+      <h3 class="text-center fw-bold mb-4"></h3>
         Perincian Pendaftaran
       </h3>
 
@@ -404,7 +421,7 @@ p {
       
    
     <div class="card shadow-lg border-0 rounded-4 p-4">
-      <h3 class="text-center fw-bold mb-4">
+      <h3 class="text-center fw-bold mb-4"></h3>
       <h5 class="mb-3" style="text-align: center;" ></h5>
       <div class="table-responsive">
         <table class="table table-bordered table-striped text-center">
