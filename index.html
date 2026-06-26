@@ -63,21 +63,17 @@
 }
 .entry-links {
   pointer-events: auto;
-}h2 {
-  font-size: 20px;
+}#contact {
+  padding-left: 20px;
+  padding-right: 20px;
 }
-p {
-  font-size: 14px;
+
+#contact h2 {
+  font-size: 15px;
 }
-#contact {
-  color: white;
-}
-#contact i {
-  font-size: 14px !important;
-}
-#contact a {
-  color: white !important;
-  text-decoration: none;
+
+#contact p {
+  font-size: 13px;
 }table {
   font-size: 13px;
 }
@@ -104,6 +100,12 @@ th, td {
 }.contact-item h4 {
   color: white;
 }
+#contact .info-item .content h2,
+#contact .info-item .content p {
+  color: #ffffff !important;
+}#contact .icon-box i {
+  color: #ffffff;
+}
   </style>
 </head>
 
@@ -116,7 +118,7 @@ th, td {
       <nav id="navmenu" class="navmenu">
 
         <div class="profile-img">
-          <img src="assets/img/Logo/logo.png" alt="" class="img-fluid rounded-circle">
+          <img src="assets/img/Logo/logo.png" alt="logo" class="img-fluid rounded-circle">
         </div>
 
         <a href="index.html" class="logo d-flex align-items-center justify-content-center active">
@@ -413,7 +415,7 @@ th, td {
 
     <div class="card shadow-lg border-0 rounded-4 p-4 mb-5">
       
-      <h3 class="text-center fw-bold mb-4"></h3>
+      <h3 class="text-center fw-bold mb-4">
         Perincian Pendaftaran
       </h3>
 
@@ -500,7 +502,7 @@ th, td {
 
       <!-- TABEL KEDUA  -->
     <div class="card shadow-lg border-0 rounded-4 p-4">
-      <h3 class="text-center fw-bold mb-4">
+      <h3 class="text-center fw-bold mb-4"></h3>
       <h5 class="mb-3" style="text-align: center;" ></h5>
       <div class="table-responsive">
         <table class="table table-bordered table-striped text-center">
@@ -776,7 +778,7 @@ th, td {
     <section id="contact" class="contact section light-background">
 
       <!-- Section Title -->
-      <div class="container section-title">
+      <div class= "container section-title">
         <h3>Contact</h3>
         <p>Pondok Pesantren Sentono Agung Darurrohman Urek urek Gondanglegi Malang</p>
       </div><!-- End Section Title -->
@@ -872,6 +874,7 @@ th, td {
   <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
   <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
@@ -898,6 +901,19 @@ overlay.addEventListener("click", () => {
   navmenu.classList.remove("active");
   overlay.classList.remove("active");
 });
+</script>
+<script src="assets/vendor/aos/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/purecounterjs@1.0.1/dist/purecounter_vanilla.js"></script>
+<script src="assets/vendor/typed.js/typed.umd.js"></script>
+
+<script>
+  AOS.init();
+  new PureCounter();
+</script>
+<script>
+document.getElementById("toggleBtn").onclick = function() {
+  document.getElementById("navmenu").classList.toggle("active");
+};
 </script>
 </body>
 
