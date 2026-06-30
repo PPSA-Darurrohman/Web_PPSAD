@@ -3181,6 +3181,22 @@ section,
   position: relative;
 }
 
+/* Overlay saat sidebar buka */
+.sidebar-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  z-index: 9998;
+}
+
+.sidebar-overlay.active {
+  display: block;
+}
+
 /* CONTENT JANGAN KETUTUP */
 .main {
   position: relative;
