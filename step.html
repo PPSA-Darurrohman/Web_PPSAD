@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="id">
 <head>
 <meta charset="UTF-8">
@@ -8,87 +9,186 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #0f172a, #1e3a8a);
+  background: radial-gradient(circle at top, #1e3a8a, #020617);
   color: #fff;
-  padding: 30px;
+  padding: 20px;
 }
 
+/* Glow Background */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  filter: blur(120px);
+  opacity: 0.25;
+  z-index: -1;
+}
+
+body::before {
+  background: #22c55e;
+  top: -100px;
+  left: -100px;
+}
+
+body::after {
+  background: #38bdf8;
+  bottom: -100px;
+  right: -100px;
+}
+
+/* Container */
 .container {
-  max-width: 700px;
+  max-width: 720px;
   margin: auto;
-  background: rgba(255,255,255,0.05);
   padding: 30px;
-  border-radius: 15px;
-  backdrop-filter: blur(10px);
-  text-align: center;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 0 40px rgba(56,189,248,0.2);
 }
 
+/* Title */
 h2 {
+  text-align: center;
   margin-bottom: 25px;
+  font-size: clamp(20px, 4vw, 28px);
 }
 
+/* Step */
 .step {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 20px;
-  text-align: left;
-}
-
-.number {
-  background: #22c55e;
-  color: #000;
-  font-weight: bold;
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 15px;
-}
-
-.text {
-  flex: 1;
-}
-
-.text strong {
-  color: #38bdf8;
-}
-
-.note {
-  margin-top: 20px;
-  padding: 15px;
-  background: rgba(255,255,255,0.1);
-  border-left: 4px solid #22c55e;
-  border-radius: 8px;
-  font-size: 14px;
-}.keterangan {
-  text-align: left;
-  margin-top: 5px;
-  font-size: 13px;
-  opacity: 0.8;
-}
-
-/* Tombol */
-.btn-daftar {
-  display: inline-block;
-  margin-top: 30px;
-  padding: 14px 30px;
-  background: linear-gradient(135deg, #22c55e, #4ade80);
-  color: #000;
-  font-weight: bold;
-  text-decoration: none;
-  border-radius: 50px;
+  gap: 12px;
+  margin-bottom: 18px;
+  padding: 12px;
+  border-radius: 12px;
   transition: 0.3s;
 }
 
-.btn-daftar:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 25px rgba(34,197,94,0.4);
+.step:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+/* Number */
+.number {
+  min-width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #22c55e, #4ade80);
+  color: #000;
+  font-weight: bold;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 12px rgba(34,197,94,0.6);
+}
+
+/* Text */
+.step div {
+  font-size: clamp(13px, 3.5vw, 15px);
+  line-height: 1.6;
+}
+
+.step strong {
+  color: #38bdf8;
+}
+
+/* Keterangan */
+.keterangan {
+  margin-top: 8px;
+  font-size: 12px;
+  text-align: left;
+  background: rgba(34,197,94,0.1);
+  padding: 8px;
+  border-left: 3px solid #22c55e;
+  border-radius: 6px;
+}
+
+/* Note */
+.note {
+  margin-top: 20px;
+  padding: 14px;
+  background: rgba(255,255,255,0.08);
+  border-left: 4px solid #22c55e;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+/* Button */
+.btn-daftar {
+  display: block;
+  margin: 30px auto 0;
+  padding: 14px;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+  background: linear-gradient(135deg, #22c55e, #4ade80);
+  color: #000;
+  font-weight: bold;
+  border-radius: 50px;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(34,197,94,0.5);
+}
+
+/* Glow Button Animation */
+.btn-daftar::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.4), transparent 60%);
+  animation: glowMove 4s linear infinite;
+}
+
+@keyframes glowMove {
+  0% {transform: translate(-50%, -50%);}
+  100% {transform: translate(50%, 50%);}
+}
+
+/* Hover (desktop only) */
+@media (hover: hover) {
+  .btn-daftar:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 35px rgba(34,197,94,0.9);
+  }
+}
+
+/* Mobile Optimization */
+@media (max-width: 480px) {
+  body {
+    padding: 15px;
+  }
+
+  .container {
+    padding: 20px;
+  }
+
+  .step {
+    flex-direction: row;
+  }
+
+  .number {
+    min-width: 30px;
+    height: 30px;
+    font-size: 12px;
+  }
 }
 </style>
+
 </head>
 
 <body>
@@ -98,48 +198,43 @@ h2 {
 
   <div class="step">
     <div class="number">1</div>
-    <div class="text">
-      Klik tombol <strong>"Daftar Sekarang"</strong> pada halaman utama.
-    </div>
+    <div>Klik tombol <strong>"Daftar Sekarang"</strong> pada halaman utama.</div>
   </div>
 
   <div class="step">
     <div class="number">2</div>
-    <div class="text">
-      Isi formulir pendaftaran dengan data yang lengkap dan benar.
-    </div>
+    <div>Isi formulir pendaftaran dengan data yang lengkap dan benar.</div>
   </div>
 
   <div class="step">
     <div class="number">3</div>
-    <div class="text">
-      Klik tombol <strong>"Daftar"</strong> untuk mengirim data.
-    </div>
+    <div>Klik tombol <strong>"Daftar"</strong> untuk mengirim data.</div>
   </div>
 
   <div class="step">
     <div class="number">4</div>
-    <div class="text">
-      Tunggu hingga muncul pesan <strong>"Pendaftaran Berhasil"</strong>.
-    </div>
+    <div>Tunggu hingga muncul pesan <strong>"Pendaftaran Berhasil"</strong>.</div>
   </div>
 
   <div class="step">
     <div class="number">5</div>
-    <div class="text">
-      Anda akan diarahkan langsung ke WhatsApp resmi 
+    <div>
+      Anda akan diarahkan ke WhatsApp resmi 
       <strong>PONDOK PESANTREN SENTONO AGUNG DARURROHMAN</strong> 
-      untuk melakukan konfirmasi pendaftaran.
-      <p class="keterangan">* Tunggu sampai anda di arahkan ke WhatsApp</p>
-    </div>
+      untuk konfirmasi pendaftaran.
+
+```
+  <p class="keterangan">* Tunggu sampai anda diarahkan ke WhatsApp</p>
+</div>
+```
+
   </div>
 
   <div class="note">
     Pastikan nomor WhatsApp aktif agar proses konfirmasi berjalan lancar.
   </div>
 
-  <!-- Tombol Daftar -->
-  <a href="pendaftaran.html" class="btn-daftar">Daftar Sekarang</a>
+<a href="pendaftaran.html" class="btn-daftar">Daftar Sekarang</a>
 
 </div>
 
