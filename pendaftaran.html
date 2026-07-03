@@ -108,8 +108,8 @@ button {
   <form id="formSantri">
     <input type="text" name="nama" placeholder="Nama Lengkap" required>
     <input type="text" name="wali" placeholder="Nama Wali" required>
-    <input type="number" name="kk" placeholder="No KK" required>
-    <input type="number" name="nik" placeholder="NIK" required>
+    <input type="text" name="kk" maxlength="16" pattern="\d{16}" required>
+    <input type="text" name="nik" maxlength="16" pattern="\d{16}" required>
     <input type="text" name="tempat_lahir" placeholder="Tempat Lahir" required>
     <input type="text" name="tanggal_lahir" placeholder="Tanggal Lahir" required>
 
@@ -144,51 +144,50 @@ function showNotif() {
 
 document.getElementById("formSantri").addEventListener("submit", function(e) {
   e.preventDefault();
-  showLoading(); // 🔥 tampilkan loading
+  showLoading();
 
   const form = e.target;
-
-  const data = {
-    nama: form.nama.value,
-    wali: form.wali.value,
-    kk: form.kk.value,
-    nik: form.nik.value,
-    tempat_lahir: form.tempat_lahir.value,
-    tanggal_lahir: form.tanggal_lahir.value,
-    jenis_kelamin: form.jenis_kelamin.value,
-    alamat: form.alamat.value
-  };
+  const formData = new FormData(form);
 
   fetch(scriptURL, {
     method: "POST",
-    body: JSON.stringify(data)
-  }).then(() => {
+    body: formData
+  })
+  .then(() => {
 
-    hideLoading(); // 🔥 hilangkan loading
+    hideLoading();
     showNotif();
 
-    const noAdmin = data.jenis_kelamin === "Putra"
-      ? "6282264929307"
-      : "6281230109050";
+    // 🔥 mapping admin lebih rapi
+    const adminMap = {
+      Putra: "6282264929307",
+      Putri: "6281230109050"
+    };
+
+    const noAdmin = adminMap[form.jenis_kelamin.value];
 
     const pesan = `*PENDAFTARAN SANTRI BARU*
-Nama: ${data.nama}
-Wali: ${data.wali}
-KK: ${data.kk}
-NIK: ${data.nik}
-TTL: ${data.tempat_lahir}, ${data.tanggal_lahir}
-Jenis: ${data.jenis_kelamin}
-Alamat: ${data.alamat}`;
+
+Nama: ${form.nama.value}
+Wali: ${form.wali.value}
+KK: ${form.kk.value}
+NIK: ${form.nik.value}
+TTL: ${form.tempat_lahir.value}, ${form.tanggal_lahir.value}
+Jenis: ${form.jenis_kelamin.value}
+Alamat: ${form.alamat.value}`;
 
     setTimeout(() => {
-      window.location.href = `https://wa.me/${noAdmin}?text=${encodeURIComponent(pesan)}`;
+      window.open(`https://wa.me/${noAdmin}?text=${encodeURIComponent(pesan)}`, "_blank");
     }, 1500);
 
     form.reset();
-  }).catch(() => {
+  })
+  .catch((err) => {
     hideLoading();
     alert("Terjadi kesalahan, coba lagi!");
+    console.error(err);
   });
+
 });
 </script>
 
