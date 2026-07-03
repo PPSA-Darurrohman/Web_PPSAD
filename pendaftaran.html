@@ -149,24 +149,34 @@ document.getElementById("formSantri").addEventListener("submit", function(e) {
   const form = e.target;
   const formData = new FormData(form);
 
+  if (!form.jenis_kelamin.value) {
+  alert("Pilih jenis kelamin dulu!");
+  hideLoading();
+  return;
+}
+
   fetch(scriptURL, {
-    method: "POST",
-    body: formData
-  })
-  .then(() => {
+  method: "POST",
+  body: formData
+})
+.then(res => res.json())
+.then(res => {
 
-    hideLoading();
-    showNotif();
+  if (res.status !== "success") {
+    throw new Error(res.message || "Gagal kirim data");
+  }
 
-    // 🔥 mapping admin lebih rapi
-    const adminMap = {
-      Putra: "6282264929307",
-      Putri: "6281230109050"
-    };
+  hideLoading();
+  showNotif();
 
-    const noAdmin = adminMap[form.jenis_kelamin.value];
+  const adminMap = {
+    Putra: "6282264929307",
+    Putri: "6281230109050"
+  };
 
-    const pesan = `*PENDAFTARAN SANTRI BARU*
+  const noAdmin = adminMap[form.jenis_kelamin.value];
+
+  const pesan = `*PENDAFTARAN SANTRI BARU*
 
 Nama: ${form.nama.value}
 Wali: ${form.wali.value}
@@ -176,18 +186,17 @@ TTL: ${form.tempat_lahir.value}, ${form.tanggal_lahir.value}
 Jenis: ${form.jenis_kelamin.value}
 Alamat: ${form.alamat.value}`;
 
-    setTimeout(() => {
-      window.open(`https://wa.me/${noAdmin}?text=${encodeURIComponent(pesan)}`, "_blank");
-    }, 1500);
+  setTimeout(() => {
+    window.open(`https://wa.me/${noAdmin}?text=${encodeURIComponent(pesan)}`, "_blank");
+  }, 1500);
 
-    form.reset();
-  })
-  .catch((err) => {
-    hideLoading();
-    alert("Terjadi kesalahan, coba lagi!");
-    console.error(err);
-  });
-
+  form.reset();
+})
+.catch((err) => {
+  hideLoading();
+  alert("❌ Gagal kirim data: " + err.message);
+  console.error(err);
+});
 });
 </script>
 
