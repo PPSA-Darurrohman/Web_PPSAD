@@ -241,7 +241,7 @@ if (btn.disabled) return;
   try {
     res = JSON.parse(text);
   } catch {
-    throw new Error("Response bukan JSON");
+    throw new Error("Terjadi Kesalahan");
   }
 
   const loading = document.getElementById("loadingPopup");
