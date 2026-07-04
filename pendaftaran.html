@@ -219,13 +219,7 @@ form.addEventListener("submit", e => {
     method:"POST",
     body:new FormData(form)
   })
-  .then(res => res.text())
-  .then(text => {
-  try {
-    return JSON.parse(text);
-  } catch (e) {
-    throw new Error("Respon bukan JSON: " + text);
-  }
+ .then(res => res.json())
 })
   .then(res => {
 
@@ -262,8 +256,8 @@ Alamat: ${form.alamat.value}`;
     document.getElementById("loadingPopup").style.display = "none";
     btn.disabled = false;
     btn.innerText = "Daftar Sekarang";
-    alert("❌ "+err.message);
-  });
+    document.getElementById("success").innerHTML = "❌ " + err.message;
+    document.getElementById("success").style.display = "block";   
 
 });
 </script>
