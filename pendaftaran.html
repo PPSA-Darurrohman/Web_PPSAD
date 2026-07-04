@@ -202,12 +202,12 @@ const btn = form.querySelector("button");
 /* VALIDASI REALTIME */
 form.kk.addEventListener("input", () => {
   const err = form.kk.nextElementSibling;
-  err.style.display = form.kk.value.length !== 16 ? "block" : "none";
+  err.style.display =!/^\d{16}$/.test(form.kk.value) ? "block" : "none";
 });
 
 form.nik.addEventListener("input", () => {
   const err = form.nik.nextElementSibling;
-  err.style.display = form.nik.value.length !== 16 ? "block" : "none";
+  err.style.display = !/^\d{16}$/.test(form.nik.value) ? "block" : "none";
 });
 
 /* SUBMIT */
@@ -269,9 +269,16 @@ Jenis: ${form.jenis_kelamin.value}
 Alamat: ${form.alamat.value}`;
 
     setTimeout(()=>{
-      window.open(
-        `https://wa.me/${adminMap[form.jenis_kelamin.value]}?text=${encodeURIComponent(pesan)}`,
-        "_blank"
+      const noAdmin = adminMap[form.jenis_kelamin.value];
+
+      if (!noAdmin) {
+        alert("Admin tidak ditemukan");
+        return;
+      }
+
+    window.open(
+      `https://wa.me/${noAdmin}?text=${encodeURIComponent(pesan)}`,
+     "_blank"
       );
     },1500);
 
