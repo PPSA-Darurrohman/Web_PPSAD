@@ -211,56 +211,54 @@ form.nik.addEventListener("input", () => {
 });
 
 /* SUBMIT */
-form.addEventListener("submit", e => {
+ form.addEventListener("submit", e => {
   e.preventDefault();
 
   if (form.kk.value.length !== 16) {
-  form.kk.focus();
-  return alert("KK harus 16 digit");
-}
+    form.kk.focus();
+    return alert("KK harus 16 digit");
+  }
 
-if (form.nik.value.length !== 16) {
-  form.nik.focus();
-  return alert("NIK harus 16 digit");
-}
-if (btn.disabled) return;
+  if (form.nik.value.length !== 16) {
+    form.nik.focus();
+    return alert("NIK harus 16 digit");
+  }
 
-  document.getElementById("loadingPopup").style.display = "flex";
+  if (btn.disabled) return;
+
+  const loading = document.getElementById("loadingPopup");
+  loading.style.display = "flex";
 
   btn.disabled = true;
   btn.innerText = "Memproses...";
 
- fetch(scriptURL, {
-  method:"POST",
-  body:new FormData(form)
-})
-.then(res => res.text())
-.then(text => {
-  let res;
+  fetch(scriptURL, {
+    method: "POST",
+    body: new URLSearchParams(new FormData(form))
+  })
+  .then(res => res.json())
+  .then(res => {
 
-  try {
-    res = JSON.parse(text);
-  } catch {
-    throw new Error("Terjadi Kesalahan");
-  }
+    // 🔥 TUTUP LOADING DI SINI
+    loading.style.display = "none";
 
-  const loading = document.getElementById("loadingPopup");
-  loading.style.display = "none";
+    if (res.status !== "success") {
+      throw new Error(res.message);
+    }
 
-  if (res.status !== "success") {
-    throw new Error(res.message);
-  }
+    // ✅ SUCCESS
+    document.getElementById("success").innerHTML = "✅ Pendaftaran berhasil!";
+    document.getElementById("success").style.display = "block";
 
-  document.getElementById("success").innerHTML = "✅ Pendaftaran berhasil!";
-  document.getElementById("success").style.display = "block";
+    const adminMap = {
+      Putra:"6282264929307",
+      Putri:"6281230109050"
+    };
 
-  const adminMap = {
-    Putra:"6282264929307",
-    Putri:"6281230109050"
-  };
-  const tgl = new Date(form.tanggal_lahir.value)
-  .toLocaleDateString("id-ID");
-  const pesan = `PENDAFTARAN SANTRI BARU
+    const tgl = new Date(form.tanggal_lahir.value)
+      .toLocaleDateString("id-ID");
+
+    const pesan = `PENDAFTARAN SANTRI BARU
 
 Nama: ${form.nama.value}
 Wali: ${form.wali.value}
@@ -270,24 +268,31 @@ TTL: ${form.tempat_lahir.value}, ${tgl}
 Jenis: ${form.jenis_kelamin.value}
 Alamat: ${form.alamat.value}`;
 
-  setTimeout(()=>{
-    window.open(`https://wa.me/${adminMap[form.jenis_kelamin.value]}?text=${encodeURIComponent(pesan)}`,"_blank");
-  },1500);
+    setTimeout(()=>{
+      window.open(
+        `https://wa.me/${adminMap[form.jenis_kelamin.value]}?text=${encodeURIComponent(pesan)}`,
+        "_blank"
+      );
+    },1500);
 
-  form.reset();
-  btn.disabled = false;
-  btn.innerText = "Daftar Sekarang";
+    form.reset();
+    btn.disabled = false;
+    btn.innerText = "Daftar Sekarang";
 
-})
-.catch(err=>{
-  document.getElementById("loadingPopup").style.display = "none";
-  btn.disabled = false;
-  btn.innerText = "Daftar Sekarang";
+  })
+  .catch(err => {
 
-  document.getElementById("success").innerHTML = "❌ " + err.message;
-  document.getElementById("success").style.display = "block";
+    loading.style.display = "none";
+    btn.disabled = false;
+    btn.innerText = "Daftar Sekarang";
+
+    document.getElementById("success").innerHTML = "❌ " + err.message;
+    document.getElementById("success").style.display = "block";
+
+  });
+
 });
-});
+
 </script>
 
 </body>
