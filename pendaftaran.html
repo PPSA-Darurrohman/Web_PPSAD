@@ -43,14 +43,13 @@ h2 { text-align:center; margin-bottom:15px; }
 /* Input */
 .input-group { margin-bottom:10px; }
 
-input, textarea, select {
-  background:rgba(255,255,255,0.2);
-  color:#fff;
-  border-radius:12px;
-}
-
-input::placeholder {
-  color:rgba(255,255,255,0.6);
+input, select, textarea {
+  width:100%;
+  padding:10px;
+  border-radius:10px;
+  border:none;
+  outline:none;
+  font-size:14px;
 }
 
 input:focus, textarea:focus, select:focus {
@@ -68,18 +67,17 @@ input:focus, textarea:focus, select:focus {
 button {
   width:100%;
   padding:12px;
-  border:none;
-  border-radius:12px;
-  background:rgba(255,255,255,0.2);
-  backdrop-filter:blur(10px);
+  margin-top:10px;
+  background:linear-gradient(135deg,#00cec9,#0984e3);
   color:white;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
   font-weight:600;
   transition:0.3s;
 }
 
-button:hover {
-  background:rgba(255,255,255,0.35);
-}
+button:hover { transform:scale(1.03); }
 button:disabled { opacity:0.6; cursor:not-allowed; }
 
 /* Loading */
