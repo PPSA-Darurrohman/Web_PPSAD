@@ -85,27 +85,30 @@ button:disabled { opacity:0.6; cursor:not-allowed; }
   position:fixed;
   top:0; left:0;
   width:100%; height:100%;
-  background:rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+  background: rgba(0,0,0,0.4);
   display:none;
   align-items:center;
   justify-content:center;
+  z-index:999;
 }
 
-.loading-box {
-  background:#fff;
-  padding:25px;
-  border-radius:15px;
-  text-align:center;
-}
-
+/* HAPUS BOX PUTIH — LANGSUNG SPINNER */
 .spinner {
-  width:40px;
-  height:40px;
-  border:4px solid #ddd;
-  border-top:4px solid #0984e3;
+  width:50px;
+  height:50px;
+  border:5px solid rgba(255,255,255,0.2);
+  border-top:5px solid #ffffff;
   border-radius:50%;
-  animation:spin 1s linear infinite;
-  margin:auto;
+  animation:spin 0.8s linear infinite;
+}
+
+/* optional teks */
+.loading-text {
+  margin-top:10px;
+  color:#fff;
+  font-size:14px;
+  text-align:center;
 }
 
 @keyframes spin { to {transform:rotate(360deg);} }
@@ -113,13 +116,19 @@ button:disabled { opacity:0.6; cursor:not-allowed; }
 /* Success */
 .success {
   display:none;
-  background:#00b894;
-  padding:10px;
-  border-radius:10px;
+  background:linear-gradient(135deg,#00b894,#00cec9);
+  padding:12px;
+  border-radius:12px;
   text-align:center;
   margin-bottom:10px;
-  animation:fadeIn 0.5s;
+  animation:fadeIn 0.5s ease, glow 1.5s infinite alternate;
 }
+
+@keyframes glow {
+  from { box-shadow:0 0 5px #00cec9; }
+  to { box-shadow:0 0 15px #00cec9; }
+}
+
 </style>
 
 </head>
@@ -127,9 +136,9 @@ button:disabled { opacity:0.6; cursor:not-allowed; }
 <body>
 
 <div id="loadingPopup" class="loading-popup">
-  <div class="loading-box">
+  <div style="text-align:center;">
     <div class="spinner"></div>
-    <p>Memproses...</p>
+    <div class="loading-text">Memproses...</div>
   </div>
 </div>
 
@@ -205,60 +214,79 @@ form.nik.addEventListener("input", () => {
 form.addEventListener("submit", e => {
   e.preventDefault();
 
-  if (form.kk.value.length !== 16 || form.nik.value.length !== 16) {
-    alert("Periksa KK & NIK!");
-    return;
-  }
+  if (form.kk.value.length !== 16) {
+  form.kk.focus();
+  return alert("KK harus 16 digit");
+}
+
+if (form.nik.value.length !== 16) {
+  form.nik.focus();
+  return alert("NIK harus 16 digit");
+}
+if (btn.disabled) return;
 
   document.getElementById("loadingPopup").style.display = "flex";
 
   btn.disabled = true;
   btn.innerText = "Memproses...";
 
-  fetch(scriptURL, {
-    method:"POST",
-    body:new FormData(form)
-  })
- .then(res => res.json())
+ fetch(scriptURL, {
+  method:"POST",
+  body:new FormData(form)
 })
-  .then(res => {
+.then(res => res.text())
+.then(text => {
+  let res;
 
-    if (res.status !== "success") throw new Error(res.message);
+  try {
+    res = JSON.parse(text);
+  } catch {
+    throw new Error("Response bukan JSON");
+  }
 
-    document.getElementById("loadingPopup").style.display = "none";
-    document.getElementById("success").style.display = "block";
+  const loading = document.getElementById("loadingPopup");
+  loading.style.display = "none";
 
-    const adminMap = {
-      Putra:"6282264929307",
-      Putri:"6281230109050"
-    };
+  if (res.status !== "success") {
+    throw new Error(res.message);
+  }
 
-    const pesan = `PENDAFTARAN SANTRI BARU
+  document.getElementById("success").innerHTML = "✅ Pendaftaran berhasil!";
+  document.getElementById("success").style.display = "block";
+
+  const adminMap = {
+    Putra:"6282264929307",
+    Putri:"6281230109050"
+  };
+  const tgl = new Date(form.tanggal_lahir.value)
+  .toLocaleDateString("id-ID");
+  const pesan = `PENDAFTARAN SANTRI BARU
 
 Nama: ${form.nama.value}
 Wali: ${form.wali.value}
 KK: ${form.kk.value}
 NIK: ${form.nik.value}
-TTL: ${form.tempat_lahir.value}, ${form.tanggal_lahir.value}
+TTL: ${form.tempat_lahir.value}, ${tgl}
 Jenis: ${form.jenis_kelamin.value}
 Alamat: ${form.alamat.value}`;
 
-    setTimeout(()=>{
-      window.open(`https://wa.me/${adminMap[form.jenis_kelamin.value]}?text=${encodeURIComponent(pesan)}`,"_blank");
-    },1500);
+  setTimeout(()=>{
+    window.open(`https://wa.me/${adminMap[form.jenis_kelamin.value]}?text=${encodeURIComponent(pesan)}`,"_blank");
+  },1500);
 
-    form.reset();
-    btn.disabled = false;
-    btn.innerText = "Daftar Sekarang";
+  form.reset();
+  btn.disabled = false;
+  btn.innerText = "Daftar Sekarang";
 
-  })
-  .catch(err=>{
-    document.getElementById("loadingPopup").style.display = "none";
-    btn.disabled = false;
-    btn.innerText = "Daftar Sekarang";
-    document.getElementById("success").innerHTML = "❌ " + err.message;
-    document.getElementById("success").style.display = "block";   
+})
+.catch(err=>{
+  document.getElementById("loadingPopup").style.display = "none";
+  btn.disabled = false;
+  btn.innerText = "Daftar Sekarang";
 
+  document.getElementById("success").innerHTML = "❌ " + err.message;
+  document.getElementById("success").style.display = "block";
+});
 });
 </script>
 
