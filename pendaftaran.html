@@ -1,190 +1,239 @@
 <!DOCTYPE html>
+
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pendaftaran Santri</title>
+<title>Pendaftaran Santri Premium</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin:0; padding:0; box-sizing:border-box; }
 
 body {
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, rgb(110, 209, 255), rgb(99, 87, 207));
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#6ed1ff,#6357cf);
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
+/* Glass Container */
 .container {
-  width: 100%;
-  max-width: 420px;
-  background: rgba(175, 174, 247, 0.15);
-  backdrop-filter: blur(15px);
-  padding: 25px;
-  border-radius: 20px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-  color: white;
+  width:100%;
+  max-width:420px;
+  background:rgba(255,255,255,0.15);
+  backdrop-filter:blur(20px);
+  padding:25px;
+  border-radius:20px;
+  box-shadow:0 10px 40px rgba(0,0,0,0.3);
+  color:#fff;
+  animation:fadeIn 0.8s ease;
 }
 
-h2 { text-align: center; margin-bottom: 15px; }
+@keyframes fadeIn {
+  from {opacity:0; transform:translateY(20px);}
+  to {opacity:1; transform:translateY(0);}
+}
+
+h2 { text-align:center; margin-bottom:15px; }
+
+/* Input */
+.input-group { margin-bottom:10px; }
 
 input, select, textarea {
-  width: 100%;
-  padding: 10px;
-  margin: 6px 0;
-  border-radius: 10px;
-  border: none;
+  width:100%;
+  padding:10px;
+  border-radius:10px;
+  border:none;
+  outline:none;
+  font-size:14px;
 }
 
+input:focus, textarea:focus, select:focus {
+  box-shadow:0 0 0 2px #00cec9;
+}
+
+/* Error */
+.error {
+  font-size:12px;
+  color:#ff7675;
+  display:none;
+}
+
+/* Button */
 button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  background: #0984e3;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-}.loading-popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  background:linear-gradient(135deg,#00cec9,#0984e3);
+  color:white;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+  transition:0.3s;
+}
+
+button:hover { transform:scale(1.03); }
+button:disabled { opacity:0.6; cursor:not-allowed; }
+
+/* Loading */
+.loading-popup {
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
 }
 
 .loading-box {
-  background: white;
-  padding: 20px 30px;
-  border-radius: 15px;
-  text-align: center;
-}
-
-.loading-box p {
-  margin-top: 10px;
-  color: #333;
+  background:#fff;
+  padding:25px;
+  border-radius:15px;
+  text-align:center;
 }
 
 .spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #ddd;
-  border-top: 4px solid #0984e3;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: auto;
+  width:40px;
+  height:40px;
+  border:4px solid #ddd;
+  border-top:4px solid #0984e3;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+  margin:auto;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
+@keyframes spin { to {transform:rotate(360deg);} }
+
+/* Success */
+.success {
+  display:none;
+  background:#00b894;
+  padding:10px;
+  border-radius:10px;
+  text-align:center;
+  margin-bottom:10px;
+  animation:fadeIn 0.5s;
 }
 </style>
+
 </head>
 
 <body>
+
 <div id="loadingPopup" class="loading-popup">
   <div class="loading-box">
     <div class="spinner"></div>
-    <p>Memproses pendaftaran...</p>
+    <p>Memproses...</p>
   </div>
 </div>
+
 <div class="container">
   <h2>Pendaftaran Santri</h2>
 
-  <div id="notif" style="display:none; background:#00b894; padding:10px; border-radius:8px; margin-bottom:10px; text-align:center;">
-    ✅ Pendaftaran berhasil!
-  </div>
+  <div id="success" class="success">✅ Pendaftaran berhasil!</div>
 
   <form id="formSantri">
-    <input type="text" name="nama" placeholder="Nama Lengkap" required>
-    <input type="text" name="wali" placeholder="Nama Wali" required>
-    <input type="text" name="kk" placeholder="No.KK" maxlength="16" pattern="\d{16}" inputmode="numeric">
-    <input type="text" name="nik" placeholder="NIK" maxlength="16" pattern="\d{16}" inputmode="numeric">
-    <input type="text" name="tempat_lahir" placeholder="Tempat Lahir" required>
-    <input type="text" name="tanggal_lahir" placeholder="Tanggal Lahir" required>
 
-    <select name="jenis_kelamin" required>
-      <option value="">Jenis Kelamin</option>
-      <option value="Putra">Laki-laki</option>
-      <option value="Putri">Perempuan</option>
-    </select>
+<div class="input-group">
+  <input type="text" name="nama" placeholder="Nama Lengkap" required>
+</div>
 
-    <textarea name="alamat" placeholder="Alamat" required></textarea>
+<div class="input-group">
+  <input type="text" name="wali" placeholder="Nama Wali" required>
+</div>
 
-    <button type="submit">Daftar</button>
+<div class="input-group">
+  <input type="text" name="kk" placeholder="No KK (16 digit)" maxlength="16" required>
+  <div class="error">KK harus 16 digit</div>
+</div>
+
+<div class="input-group">
+  <input type="text" name="nik" placeholder="NIK (16 digit)" maxlength="16" required>
+  <div class="error">NIK harus 16 digit</div>
+</div>
+
+<div class="input-group">
+  <input type="text" name="tempat_lahir" placeholder="Tempat Lahir" required>
+</div>
+
+<div class="input-group">
+  <label>Tanggal Lahir</label>
+  <input type="date" name="tanggal_lahir" required>
+</div>
+
+<div class="input-group">
+  <select name="jenis_kelamin" required>
+    <option value="">Jenis Kelamin</option>
+    <option value="Putra">Laki-laki</option>
+    <option value="Putri">Perempuan</option>
+  </select>
+</div>
+
+<div class="input-group">
+  <textarea name="alamat" placeholder="Alamat" required></textarea>
+</div>
+
+<button type="submit">Daftar Sekarang</button>
+
   </form>
 </div>
 
 <script>
 const scriptURL = "https://script.google.com/macros/s/AKfycbxCN7dGgJDGOmRozLXoD0AY6P0nYsvjYjQ-GXWoF2MWPdYP9r9UMeOTC6QFenbLsVtZ4A/exec";
 
-function showLoading() {
-  document.getElementById("loadingPopup").style.display = "flex";
-}
-
-function hideLoading() {
-  document.getElementById("loadingPopup").style.display = "none";
-}
-
-function showNotif() {
-  const notif = document.getElementById("notif");
-  notif.style.display = "block";
-  setTimeout(() => notif.style.display = "none", 3000);
-}
-
-document.getElementById("formSantri").addEventListener("submit", function(e) {
-  e.preventDefault();
-  showLoading();
-
-  const form = e.target;
-  const formData = new FormData(form);
-
-  if (!form.jenis_kelamin.value) {
-  alert("Pilih jenis kelamin dulu!");
-  hideLoading();
-  return;
-} 
+const form = document.getElementById("formSantri");
 const btn = form.querySelector("button");
-btn.disabled = true;
-btn.innerText = "Memproses...";
 
-  fetch(scriptURL, {
-  method: "POST",
-  body: formData
-})
-.then(res => {
-  if (!res.ok) throw new Error("Server error");
-  return res.json();
-})
-.then(res => {
+/* VALIDASI REALTIME */
+form.kk.addEventListener("input", () => {
+  const err = form.kk.nextElementSibling;
+  err.style.display = form.kk.value.length !== 16 ? "block" : "none";
+});
 
-  if (res.status !== "success") {
-    throw new Error(res.message || "Gagal kirim data");
+form.nik.addEventListener("input", () => {
+  const err = form.nik.nextElementSibling;
+  err.style.display = form.nik.value.length !== 16 ? "block" : "none";
+});
+
+/* SUBMIT */
+form.addEventListener("submit", e => {
+  e.preventDefault();
+
+  if (form.kk.value.length !== 16 || form.nik.value.length !== 16) {
+    alert("Periksa KK & NIK!");
+    return;
   }
 
-  hideLoading();
-  showNotif();
+  document.getElementById("loadingPopup").style.display = "flex";
 
-  const adminMap = {
-    Putra: "6282264929307",
-    Putri: "6281230109050"
-  };
+  btn.disabled = true;
+  btn.innerText = "Memproses...";
 
-  const noAdmin = adminMap[form.jenis_kelamin.value];
+  fetch(scriptURL, {
+    method:"POST",
+    body:new FormData(form)
+  })
+  .then(res => res.text())
+  .then(text => JSON.parse(text))
+  .then(res => {
 
-  if (!noAdmin) throw new Error("Admin tidak ditemukan");
+    if (res.status !== "success") throw new Error(res.message);
 
-  const pesan = `*PENDAFTARAN SANTRI BARU*
+    document.getElementById("loadingPopup").style.display = "none";
+    document.getElementById("success").style.display = "block";
+
+    const adminMap = {
+      Putra:"6282264929307",
+      Putri:"6281230109050"
+    };
+
+    const pesan = `PENDAFTARAN SANTRI BARU
 
 Nama: ${form.nama.value}
 Wali: ${form.wali.value}
@@ -194,18 +243,22 @@ TTL: ${form.tempat_lahir.value}, ${form.tanggal_lahir.value}
 Jenis: ${form.jenis_kelamin.value}
 Alamat: ${form.alamat.value}`;
 
-  setTimeout(() => {
-    window.open(`https://wa.me/${noAdmin}?text=${encodeURIComponent(pesan)}`, "_blank");
-  }, 1500);
+    setTimeout(()=>{
+      window.open(`https://wa.me/${adminMap[form.jenis_kelamin.value]}?text=${encodeURIComponent(pesan)}`,"_blank");
+    },1500);
 
-  form.reset();
-})
-.catch((err) => {
-  hideLoading();
-  btn.disabled = false;
-  btn.innerText = "Daftar";
-  alert("❌ " + err.message);
-});
+    form.reset();
+    btn.disabled = false;
+    btn.innerText = "Daftar Sekarang";
+
+  })
+  .catch(err=>{
+    document.getElementById("loadingPopup").style.display = "none";
+    btn.disabled = false;
+    btn.innerText = "Daftar Sekarang";
+    alert("❌ "+err.message);
+  });
+
 });
 </script>
 
