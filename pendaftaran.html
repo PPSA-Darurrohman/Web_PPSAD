@@ -43,13 +43,14 @@ h2 { text-align:center; margin-bottom:15px; }
 /* Input */
 .input-group { margin-bottom:10px; }
 
-input, select, textarea {
-  width:100%;
-  padding:10px;
-  border-radius:10px;
-  border:none;
-  outline:none;
-  font-size:14px;
+input, textarea, select {
+  background:rgba(255,255,255,0.2);
+  color:#fff;
+  border-radius:12px;
+}
+
+input::placeholder {
+  color:rgba(255,255,255,0.6);
 }
 
 input:focus, textarea:focus, select:focus {
@@ -67,17 +68,18 @@ input:focus, textarea:focus, select:focus {
 button {
   width:100%;
   padding:12px;
-  margin-top:10px;
-  background:linear-gradient(135deg,#00cec9,#0984e3);
-  color:white;
   border:none;
-  border-radius:10px;
-  cursor:pointer;
+  border-radius:12px;
+  background:rgba(255,255,255,0.2);
+  backdrop-filter:blur(10px);
+  color:white;
   font-weight:600;
   transition:0.3s;
 }
 
-button:hover { transform:scale(1.03); }
+button:hover {
+  background:rgba(255,255,255,0.35);
+}
 button:disabled { opacity:0.6; cursor:not-allowed; }
 
 /* Loading */
@@ -220,7 +222,13 @@ form.addEventListener("submit", e => {
     body:new FormData(form)
   })
   .then(res => res.text())
-  .then(text => JSON.parse(text))
+  .then(text => {
+  try {
+    return JSON.parse(text);
+  } catch (e) {
+    throw new Error("Respon bukan JSON: " + text);
+  }
+})
   .then(res => {
 
     if (res.status !== "success") throw new Error(res.message);
