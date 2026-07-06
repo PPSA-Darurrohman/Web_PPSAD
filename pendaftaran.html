@@ -194,16 +194,16 @@ button:disabled { opacity:0.6; cursor:not-allowed; }
 </div>
 
 <script>
-const form = document.getElementById("form");
-const btn = document.getElementById("btn");
-const loading = document.getElementById("loading");
+const form = document.getElementById("formSantri"); // ✅ FIX
+const btn = document.querySelector("button"); // ✅ ambil tombol langsung
+const loading = document.getElementById("loadingPopup"); // ✅ FIX
 
 const scriptURL = "https://script.google.com/macros/s/AKfycbxCN7dGgJDGOmRozLXoD0AY6P0nYsvjYjQ-GXWoF2MWPdYP9r9UMeOTC6QFenbLsVtZ4A/exec";
 
 form.addEventListener("submit", function(e) {
   e.preventDefault();
 
-  loading.style.display = "block";
+  loading.style.display = "flex"; // ✅ karena pakai flex
   btn.disabled = true;
   btn.innerText = "Mengirim...";
 
@@ -211,7 +211,7 @@ form.addEventListener("submit", function(e) {
     method: "POST",
     body: new URLSearchParams(new FormData(form))
   })
-  .then(res => res.text()) // ✅ FIX WAJIB
+  .then(res => res.text())
   .then(text => {
     console.log("RAW:", text);
 
@@ -228,7 +228,6 @@ form.addEventListener("submit", function(e) {
       throw new Error(res.message || "Gagal kirim data");
     }
 
-    // ✅ SUCCESS
     document.getElementById("success").style.display = "block";
 
     const adminMap = {
