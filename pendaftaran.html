@@ -194,80 +194,54 @@ button:disabled { opacity:0.6; cursor:not-allowed; }
 </div>
 
 <script>
+const form = document.getElementById("form");
+const btn = document.getElementById("btn");
+const loading = document.getElementById("loading");
+
 const scriptURL = "https://script.google.com/macros/s/AKfycbxCN7dGgJDGOmRozLXoD0AY6P0nYsvjYjQ-GXWoF2MWPdYP9r9UMeOTC6QFenbLsVtZ4A/exec";
 
-const form = document.getElementById("formSantri");
-const btn = form.querySelector("button");
-
-/* VALIDASI REALTIME */
-form.kk.addEventListener("input", () => {
-  const err = form.kk.nextElementSibling;
-  err.style.display =!/^\d{16}$/.test(form.kk.value) ? "block" : "none";
-});
-
-form.nik.addEventListener("input", () => {
-  const err = form.nik.nextElementSibling;
-  err.style.display = !/^\d{16}$/.test(form.nik.value) ? "block" : "none";
-});
-
-/* SUBMIT */
- form.addEventListener("submit", e => {
+form.addEventListener("submit", function(e) {
   e.preventDefault();
 
-  if (form.kk.value.length !== 16) {
-    form.kk.focus();
-    return alert("KK harus 16 digit");
-  }
-
-  if (form.nik.value.length !== 16) {
-    form.nik.focus();
-    return alert("NIK harus 16 digit");
-  }
-
-  if (btn.disabled) return;
-
-  const loading = document.getElementById("loadingPopup");
-  loading.style.display = "flex";
-
+  loading.style.display = "block";
   btn.disabled = true;
-  btn.innerText = "Memproses...";
+  btn.innerText = "Mengirim...";
 
- fetch(scriptURL, {
-  method: "POST",
-  body: new URLSearchParams(new FormData(form))
-})
-.then(res => res.text()) // WAJIB text
-.then(text => {
-  console.log("RAW:", text);
+  fetch(scriptURL, {
+    method: "POST",
+    body: new URLSearchParams(new FormData(form))
+  })
+  .then(res => res.text()) // ✅ FIX WAJIB
+  .then(text => {
+    console.log("RAW:", text);
 
-  let res;
-  try {
-    res = JSON.parse(text);
-  } catch (e) {
-    throw new Error("Server tidak mengembalikan JSON");
-  }
+    let res;
+    try {
+      res = JSON.parse(text);
+    } catch (e) {
+      throw new Error("Response bukan JSON");
+    }
 
-  // stop loading
-  loading.style.display = "none";
+    loading.style.display = "none";
 
-  if (res.status !== "success") {
-    throw new Error(res.message || "Gagal kirim data");
-  }
+    if (res.status !== "success") {
+      throw new Error(res.message || "Gagal kirim data");
+    }
 
-  // ✅ SUCCESS
-  document.getElementById("success").style.display = "block";
+    // ✅ SUCCESS
+    document.getElementById("success").style.display = "block";
 
-  const adminMap = {
-    Putra: "6282264929307",
-    Putri: "6281230109050"
-  };
+    const adminMap = {
+      Putra: "6282264929307",
+      Putri: "6281230109050"
+    };
 
-  const jk = form.jenis_kelamin.value.trim();
+    const jk = form.jenis_kelamin.value.trim();
 
-  const tgl = new Date(form.tanggal_lahir.value)
-    .toLocaleDateString("id-ID");
+    const tgl = new Date(form.tanggal_lahir.value)
+      .toLocaleDateString("id-ID");
 
-  const pesan = `PENDAFTARAN SANTRI BARU
+    const pesan = `PENDAFTARAN SANTRI BARU
 
 Nama: ${form.nama.value}
 Wali: ${form.wali.value}
@@ -277,38 +251,36 @@ TTL: ${form.tempat_lahir.value}, ${tgl}
 Jenis: ${jk}
 Alamat: ${form.alamat.value}`;
 
-  setTimeout(() => {
-    const noAdmin = adminMap[jk];
+    setTimeout(() => {
+      const noAdmin = adminMap[jk];
 
-    if (!noAdmin) {
-      alert("Nomor admin tidak ditemukan");
-      return;
-    }
+      if (!noAdmin) {
+        alert("Jenis kelamin tidak valid");
+        return;
+      }
 
-    window.open(
-      `https://wa.me/${noAdmin}?text=${encodeURIComponent(pesan)}`,
-      "_blank"
-    );
-  }, 1200);
+      window.open(
+        `https://wa.me/${noAdmin}?text=${encodeURIComponent(pesan)}`,
+        "_blank"
+      );
+    }, 1200);
 
-  // reset form
-  form.reset();
-  btn.disabled = false;
-  btn.innerText = "Daftar Sekarang";
+    form.reset();
+    btn.disabled = false;
+    btn.innerText = "Daftar Sekarang";
 
-})
-.catch(err => {
-  console.error(err);
+  })
+  .catch(err => {
+    console.error(err);
 
-  loading.style.display = "none";
+    loading.style.display = "none";
 
-  alert("ERROR: " + err.message);
+    alert("ERROR: " + err.message);
 
-  btn.disabled = false;
-  btn.innerText = "Daftar Sekarang";
+    btn.disabled = false;
+    btn.innerText = "Daftar Sekarang";
+  });
 });
-});
-
 </script>
 
 </body>
