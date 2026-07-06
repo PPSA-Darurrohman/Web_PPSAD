@@ -29,6 +29,7 @@ body {
   backdrop-filter:blur(15px);
   box-shadow:0 8px 40px rgba(0,0,0,0.4);
   color:white;
+  animation:fadeIn .6s ease;
 }
 
 /* INPUT */
@@ -42,6 +43,11 @@ input,select,textarea{
   color:white;
 }
 
+input::placeholder, textarea::placeholder{
+  color:rgba(255,255,255,0.7);
+}
+
+/* BUTTON */
 button{
   width:100%;
   padding:12px;
@@ -51,20 +57,26 @@ button{
   background:linear-gradient(45deg,#00c6ff,#0072ff);
   color:white;
   cursor:pointer;
+  transition:.3s;
+}
+
+button:hover{
+  transform:scale(1.03);
 }
 
 /* LOADING */
 .loading{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.6);
+  background:rgba(0,0,0,0.5);
+  backdrop-filter:blur(8px);
   display:flex;
   justify-content:center;
   align-items:center;
   flex-direction:column;
   z-index:999;
 }
-.hidden{ display:none; }
+.hidden{ display:none !important; }
 
 .spinner{
   width:50px;height:50px;
@@ -79,7 +91,8 @@ button{
 .popup{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.5);
+  background:rgba(0,0,0,0.4);
+  backdrop-filter:blur(10px);
   display:flex;
   justify-content:center;
   align-items:center;
@@ -94,11 +107,17 @@ button{
   text-align:center;
   color:white;
   animation:zoom .4s ease;
+  box-shadow:0 0 25px rgba(0,198,255,0.4);
 }
 
 @keyframes zoom{
   from{transform:scale(.7);opacity:0;}
   to{transform:scale(1);opacity:1;}
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
 }
 </style>
 </head>
@@ -128,17 +147,17 @@ button{
 </form>
 </div>
 
-<!-- PINDAHKAN KE SINI (LUAR FORM) -->
+<!-- LOADING -->
 <div id="loading" class="loading hidden">
 <div class="spinner"></div>
 <p style="color:white;">Mengirim...</p>
 </div>
 
+<!-- POPUP -->
 <div id="popup" class="popup hidden">
 <div class="popup-box">
-<h3>✅ Berhasil</h3>
+<h3>🎉 Berhasil</h3>
 <p>Data terkirim</p>
-<button onclick="tutupPopup()">Tutup</button>
 </div>
 </div>
 
@@ -155,6 +174,12 @@ Putra:"6282264929307",
 Putri:"6281230109050"
 };
 
+// pastikan aman saat load
+window.onload=()=>{
+loading.classList.add("hidden");
+popup.classList.add("hidden");
+};
+
 form.addEventListener("submit",e=>{
 e.preventDefault();
 
@@ -166,8 +191,10 @@ alert("Pilih jenis kelamin dulu!");
 return;
 }
 
+// START
 loading.classList.remove("hidden");
 btn.disabled=true;
+btn.innerText="Mengirim...";
 
 fetch(scriptURL,{
 method:"POST",
@@ -176,9 +203,17 @@ body:new URLSearchParams(data)
 .then(r=>r.json())
 .then(r=>{
 
+if(r.status!=="success"){
+throw new Error("Gagal kirim");
+}
+
+// STOP LOADING
 loading.classList.add("hidden");
+
+// SHOW POPUP
 popup.classList.remove("hidden");
 
+// FORMAT PESAN
 const pesan=`Pendaftaran Santri
 
 Nama: ${data.get("nama")}
@@ -189,24 +224,30 @@ TTL: ${data.get("tempat_lahir")}, ${new Date(data.get("tanggal_lahir")).toLocale
 Jenis: ${jk}
 Alamat: ${data.get("alamat")}`;
 
+// AUTO WA + CLOSE POPUP
 setTimeout(()=>{
-window.open(`https://wa.me/${adminMap[jk]}?text=${encodeURIComponent(pesan)}`,'_blank');
-},700);
+popup.classList.add("hidden");
 
+window.open(
+`https://wa.me/${adminMap[jk]}?text=${encodeURIComponent(pesan)}`,
+'_blank'
+);
+
+},1500);
+
+// RESET
 form.reset();
 btn.disabled=false;
+btn.innerText="Daftar";
 
 })
 .catch(err=>{
 loading.classList.add("hidden");
 btn.disabled=false;
+btn.innerText="Daftar";
 alert("Error: "+err.message);
 });
 });
-
-function tutupPopup(){
-popup.classList.add("hidden");
-}
 </script>
 
 </body>
