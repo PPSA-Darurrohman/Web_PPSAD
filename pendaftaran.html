@@ -236,13 +236,18 @@ form.nik.addEventListener("input", () => {
   method: "POST",
   body: new URLSearchParams(new FormData(form))
 })
-.then(res => {
-  if (!res.ok) throw new Error("Server error");
-  return res.json();
-})
-.then(res => res.json())
-.then(res => {
+.then(res => res.text()) // WAJIB text
+.then(text => {
+  console.log("RAW:", text);
 
+  let res;
+  try {
+    res = JSON.parse(text);
+  } catch (e) {
+    throw new Error("Server tidak mengembalikan JSON");
+  }
+
+  // stop loading
   loading.style.display = "none";
 
   if (res.status !== "success") {
@@ -250,21 +255,14 @@ form.nik.addEventListener("input", () => {
   }
 
   // ✅ SUCCESS
-  const successBox = document.getElementById("success");
-  successBox.innerHTML = "✅ Pendaftaran berhasil!";
-  successBox.style.display = "block";
+  document.getElementById("success").style.display = "block";
 
   const adminMap = {
-    "Putra": "6282264929307",
-    "Putri": "6281230109050"
+    Putra: "6282264929307",
+    Putri: "6281230109050"
   };
 
   const jk = form.jenis_kelamin.value.trim();
-
-  if (!adminMap[jk]) {
-    alert("Jenis kelamin belum dipilih / admin tidak ada");
-    return;
-  }
 
   const tgl = new Date(form.tanggal_lahir.value)
     .toLocaleDateString("id-ID");
@@ -280,19 +278,30 @@ Jenis: ${jk}
 Alamat: ${form.alamat.value}`;
 
   setTimeout(() => {
+    const noAdmin = adminMap[jk];
+
+    if (!noAdmin) {
+      alert("Nomor admin tidak ditemukan");
+      return;
+    }
+
     window.open(
-      `https://wa.me/${adminMap[jk]}?text=${encodeURIComponent(pesan)}`,
+      `https://wa.me/${noAdmin}?text=${encodeURIComponent(pesan)}`,
       "_blank"
     );
   }, 1200);
 
+  // reset form
   form.reset();
   btn.disabled = false;
   btn.innerText = "Daftar Sekarang";
 
 })
 .catch(err => {
+  console.error(err);
+
   loading.style.display = "none";
+
   alert("ERROR: " + err.message);
 
   btn.disabled = false;
