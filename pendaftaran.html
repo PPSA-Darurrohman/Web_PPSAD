@@ -232,72 +232,72 @@ form.nik.addEventListener("input", () => {
   btn.disabled = true;
   btn.innerText = "Memproses...";
 
-  fetch(scriptURL, {
-    method: "POST",
-    body: new URLSearchParams(new FormData(form))
-  })
-  .then(res => res.json())
-  .then(res => {
+ fetch(scriptURL, {
+  method: "POST",
+  body: new URLSearchParams(new FormData(form))
+})
+.then(res => {
+  if (!res.ok) throw new Error("Server error");
+  return res.json();
+})
+.then(res => res.json())
+.then(res => {
 
-    // 🔥 TUTUP LOADING DI SINI
-    loading.style.display = "none";
+  loading.style.display = "none";
 
-    if (res.status !== "success") {
-      throw new Error(res.message);
-    }
+  if (res.status !== "success") {
+    throw new Error(res.message || "Gagal kirim data");
+  }
 
-    // ✅ SUCCESS
-    document.getElementById("success").innerHTML = "✅ Pendaftaran berhasil!";
-    document.getElementById("success").style.display = "block";
+  // ✅ SUCCESS
+  const successBox = document.getElementById("success");
+  successBox.innerHTML = "✅ Pendaftaran berhasil!";
+  successBox.style.display = "block";
 
-    const adminMap = {
-      Putra:"6282264929307",
-      Putri:"6281230109050"
-    };
+  const adminMap = {
+    "Putra": "6282264929307",
+    "Putri": "6281230109050"
+  };
 
-    const tgl = new Date(form.tanggal_lahir.value)
-      .toLocaleDateString("id-ID");
+  const jk = form.jenis_kelamin.value.trim();
 
-    const pesan = `PENDAFTARAN SANTRI BARU
+  if (!adminMap[jk]) {
+    alert("Jenis kelamin belum dipilih / admin tidak ada");
+    return;
+  }
+
+  const tgl = new Date(form.tanggal_lahir.value)
+    .toLocaleDateString("id-ID");
+
+  const pesan = `PENDAFTARAN SANTRI BARU
 
 Nama: ${form.nama.value}
 Wali: ${form.wali.value}
 KK: ${form.kk.value}
 NIK: ${form.nik.value}
 TTL: ${form.tempat_lahir.value}, ${tgl}
-Jenis: ${form.jenis_kelamin.value}
+Jenis: ${jk}
 Alamat: ${form.alamat.value}`;
 
-    setTimeout(()=>{
-      const noAdmin = adminMap[form.jenis_kelamin.value];
-
-      if (!noAdmin) {
-        alert("Admin tidak ditemukan");
-        return;
-      }
-
+  setTimeout(() => {
     window.open(
-      `https://wa.me/${noAdmin}?text=${encodeURIComponent(pesan)}`,
-     "_blank"
-      );
-    },1500);
+      `https://wa.me/${adminMap[jk]}?text=${encodeURIComponent(pesan)}`,
+      "_blank"
+    );
+  }, 1200);
 
-    form.reset();
-    btn.disabled = false;
-    btn.innerText = "Daftar Sekarang";
+  form.reset();
+  btn.disabled = false;
+  btn.innerText = "Daftar Sekarang";
 
-  })
-  .catch(err => {
+})
+.catch(err => {
+  loading.style.display = "none";
+  alert("ERROR: " + err.message);
 
-    loading.style.display = "none";
-    btn.disabled = false;
-    btn.innerText = "Daftar Sekarang";
-
-    document.getElementById("success").innerHTML = "❌ " + err.message;
-    document.getElementById("success").style.display = "block";
-
-  });
-
+  btn.disabled = false;
+  btn.innerText = "Daftar Sekarang";
+});
 });
 
 </script>
