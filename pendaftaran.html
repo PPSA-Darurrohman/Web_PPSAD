@@ -12,7 +12,7 @@
 
 body {
   min-height:100vh;
-  background: linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  background: linear-gradient(135deg,#000a35,#1f3cbb,#84a4fa);
   display:flex;
   justify-content:center;
   align-items:center;
@@ -125,6 +125,12 @@ button:hover{
 <body>
 
 <div class="container">
+  <div class="container-fluid position-relative d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center">
+        <img src="assets/img/Logo/mungil.webp" alt="Logo Darurrohman">
+      </a>
+  </div>
 <h2>Form Pendaftaran</h2>
 
 <form id="formSantri">
@@ -133,8 +139,7 @@ button:hover{
 <input name="kk" placeholder="No KK" required>
 <input name="nik" placeholder="NIK" required>
 <input name="tempat_lahir" placeholder="Tempat Lahir" required>
-<input type="date" name="tanggal_lahir" required>
-
+<label><input type="date" name="tanggal_lahir" required>Tanggal Lahir</label>
 <select name="jenis_kelamin" required>
 <option value="">Pilih</option>
 <option value="Putra">Laki-laki</option>
