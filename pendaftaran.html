@@ -8,19 +8,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
-* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 
-body {
+body{
   min-height:100vh;
-  background: linear-gradient(135deg,#000a35,#1f3cbb,#84a4fa);
+  background:linear-gradient(135deg,#000a35,#1f3cbb,#84a4fa);
   display:flex;
   justify-content:center;
   align-items:center;
   padding:20px;
 }
 
-/* CONTAINER */
-.container {
+.container{
   width:100%;
   max-width:420px;
   padding:25px;
@@ -32,7 +31,8 @@ body {
   animation:fadeIn .6s ease;
 }
 
-/* INPUT */
+h2{margin-bottom:10px;text-align:center;}
+
 input,select,textarea{
   width:100%;
   padding:12px;
@@ -43,11 +43,15 @@ input,select,textarea{
   color:white;
 }
 
-input::placeholder, textarea::placeholder{
+input::placeholder,textarea::placeholder{
   color:rgba(255,255,255,0.7);
 }
 
-/* BUTTON */
+label{
+  font-size:13px;
+  opacity:.8;
+}
+
 button{
   width:100%;
   padding:12px;
@@ -58,6 +62,7 @@ button{
   color:white;
   cursor:pointer;
   transition:.3s;
+  font-weight:500;
 }
 
 button:hover{
@@ -76,7 +81,7 @@ button:hover{
   flex-direction:column;
   z-index:999;
 }
-.hidden{ display:none !important; }
+.hidden{display:none!important;}
 
 .spinner{
   width:50px;height:50px;
@@ -85,7 +90,8 @@ button:hover{
   border-radius:50%;
   animation:spin 1s linear infinite;
 }
-@keyframes spin{ to{transform:rotate(360deg);} }
+
+@keyframes spin{to{transform:rotate(360deg);}}
 
 /* POPUP */
 .popup{
@@ -116,33 +122,38 @@ button:hover{
 }
 
 @keyframes fadeIn{
-  from{opacity:0; transform:translateY(20px);}
-  to{opacity:1; transform:translateY(0);}
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
 }
 </style>
 </head>
 
 <body>
+
 <div class="container">
 <h2>Form Pendaftaran</h2>
 
 <form id="formSantri">
-<input name="nama" placeholder="Nama" required>
+
+<input name="nama" placeholder="Nama Santri" required>
 <input name="wali" placeholder="Nama Wali" required>
 <input name="kk" placeholder="No KK" required>
-<input name="nik" placeholder="NIK" required>
+<input name="nik" placeholder="NIK (16 digit)" required maxlength="16" pattern="\d{16}" inputmode="numeric">
 <input name="tempat_lahir" placeholder="Tempat Lahir" required>
+
 <label>Tanggal Lahir</label>
-  <input type="date" name="tanggal_lahir" required>
+<input type="date" name="tanggal_lahir" required>
+
 <select name="jenis_kelamin" required>
-<option value="">Pilih</option>
+<option value="">Pilih Jenis Kelamin</option>
 <option value="Putra">Laki-laki</option>
 <option value="Putri">Perempuan</option>
 </select>
 
 <textarea name="alamat" placeholder="Alamat"></textarea>
 
-<button type="submit">Daftar</button>
+<button type="submit">Daftar Sekarang</button>
+
 </form>
 </div>
 
@@ -173,7 +184,6 @@ Putra:"6282264929307",
 Putri:"6281230109050"
 };
 
-// pastikan aman saat load
 window.onload=()=>{
 loading.classList.add("hidden");
 popup.classList.add("hidden");
@@ -185,12 +195,73 @@ e.preventDefault();
 const data=new FormData(form);
 const jk=data.get("jenis_kelamin");
 
+// 🔥 bersihkan NIK dari spasi
+const nik=(data.get("nik")||"").replace(/\s/g,'');
+data.set("nik", nik);
+// =========================
+// ✅ VALIDASI NIK SUPER LENGKAP
+// =========================
+
+// 1. harus 16 digit angka
+if (!/^\d{16}$/.test(nik)) {
+  alert("NIK harus 16 digit angka!");
+  return;
+}
+
+// 2. validasi tanggal input
+const tglInputRaw = data.get("tanggal_lahir");
+
+if (!tglInputRaw) {
+  alert("Tanggal lahir wajib diisi!");
+  return;
+}
+
+const [year, month, day] = tglInputRaw.split("-");
+const inputTgl = new Date(year, month - 1, day);
+
+if (isNaN(inputTgl)) {
+  alert("Format tanggal lahir tidak valid!");
+  return;
+}
+
+// 3. ambil data dari NIK
+let tgl = parseInt(nik.substring(6,8));
+let bln = parseInt(nik.substring(8,10));
+let thn = parseInt(nik.substring(10,12));
+
+// perempuan (tgl + 40)
+if (tgl > 40) tgl -= 40;
+
+// validasi dasar
+if (tgl < 1 || tgl > 31 || bln < 1 || bln > 12) {
+  alert("NIK tidak valid (format tanggal salah)");
+  return;
+}
+
+// 4. konversi tahun
+let tahunFull = thn > 30 ? 1900 + thn : 2000 + thn;
+
+// 5. cocokkan dengan input
+if (
+  inputTgl.getDate() !== tgl ||
+  (inputTgl.getMonth()+1) !== bln ||
+  inputTgl.getFullYear() !== tahunFull
+) {
+  alert("Tanggal lahir tidak sesuai dengan NIK!");
+  return;
+}
+
+// =========================
+
 if(!adminMap[jk]){
 alert("Pilih jenis kelamin dulu!");
 return;
 }
 
-// START
+// mapping tampilan
+const jkText = jk === "Putra" ? "Laki-laki" : "Perempuan";
+
+// loading
 loading.classList.remove("hidden");
 btn.disabled=true;
 btn.innerText="Mengirim...";
@@ -202,28 +273,32 @@ body:new URLSearchParams(data)
 .then(r=>r.json())
 .then(r=>{
 
-if(r.status!=="success"){
-throw new Error("Gagal kirim");
+if (r.status === "duplicate") {
+  loading.classList.add("hidden");
+  btn.disabled = false;
+  btn.innerText = "Daftar Sekarang";
+  alert("❌ NIK sudah terdaftar!");
+  return;
 }
 
-// STOP LOADING
-loading.classList.add("hidden");
+if (r.status !== "success") {
+  throw new Error("Gagal kirim");
+}
 
-// SHOW POPUP
+loading.classList.add("hidden");
 popup.classList.remove("hidden");
 
-// FORMAT PESAN
+// format WA
 const pesan=`Pendaftaran Santri
 
 Nama: ${data.get("nama")}
 Wali: ${data.get("wali")}
 KK: ${data.get("kk")}
-NIK: ${data.get("nik")}
-TTL: ${data.get("tempat_lahir")}, ${new Date(data.get("tanggal_lahir")).toLocaleDateString("id-ID")}
-Jenis: ${jk}
+NIK: ${nik}
+TTL: ${data.get("tempat_lahir")}, ${inputTgl.toLocaleDateString("id-ID")}
+Jenis: ${jkText}
 Alamat: ${data.get("alamat")}`;
 
-// AUTO WA + CLOSE POPUP
 setTimeout(()=>{
 popup.classList.add("hidden");
 
@@ -234,16 +309,15 @@ window.open(
 
 },1500);
 
-// RESET
 form.reset();
 btn.disabled=false;
-btn.innerText="Daftar";
+btn.innerText="Daftar Sekarang";
 
 })
 .catch(err=>{
 loading.classList.add("hidden");
 btn.disabled=false;
-btn.innerText="Daftar";
+btn.innerText="Daftar Sekarang";
 alert("Error: "+err.message);
 });
 });
