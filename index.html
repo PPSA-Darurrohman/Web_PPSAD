@@ -140,6 +140,24 @@ th, td {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}.btn-wrapper {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.btn-info {
+  padding: 12px 30px; 
+  font-size: 14px;
+  color: white;
+  background-color: #314896;
+  border: none;
+  border-radius: 50px; 
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-info:hover {
+  background-color: #1f2f6b;
 }
 
 /* RESPONSIVE */
@@ -379,14 +397,17 @@ menghafal Al-Qur’an secara mendalam.
       <li>Pengajian kitab</li>
     </ul>
   </div>
-
+  <div class="btn-wrapper">
+    <button class="btn-info" onclick="window.location.href='menu.html'">
+      Keterangan Lebih Lanjut
+    </button>
+  </div>
 </div> <!-- profil-container -->
-    </div> <!-- intro -->
-  </div> <!-- about-content -->
-</div> <!-- col-lg-7 -->
-
-        </div> <!-- row -->
-      </div> <!-- container -->
+    </div> 
+  </div>
+</div>
+        </div> 
+      </div> 
     </section>
     <!-- /Profil Section -->
 
@@ -397,8 +418,8 @@ menghafal Al-Qur’an secara mendalam.
 <section class="section-padding">
     <div class="container">
 
-        <div class="section-title text-center mb-5">
-            <h2>Jenjang Pendidikan</h2>
+       <div class="container section-title">
+        <h3>Jenjang Pendidikan </h3>
             <p>
                 Madrasah Hidayatul Mubtadi-ien menyelenggarakan pendidikan
                 berjenjang dengan kurikulum berbasis kitab kuning.
