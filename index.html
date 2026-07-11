@@ -141,23 +141,42 @@ th, td {
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
 }.btn-wrapper {
-  margin-top: 15px;
+  margin-top: 25px;
   text-align: center;
 }
 
 .btn-info {
-  padding: 12px 30px; 
-  font-size: 14px;
+  padding: 14px 40px;
+  font-size: 15px;
   color: white;
-  background-color: #314896;
+  background: linear-gradient(135deg, #314896, #0d1750);
   border: none;
-  border-radius: 50px; 
+  border-radius: 100px; /* lebih lonjong */
   cursor: pointer;
-  transition: 0.3s;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 20px rgba(49, 72, 150, 0.4);
+  letter-spacing: 0.5px;
 }
 
 .btn-info:hover {
-  background-color: #1f2f6b;
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 10px 30px rgba(49, 72, 150, 0.6);
+  background: linear-gradient(135deg, #1f2f6b, #0a1238);
+}
+
+.btn-info:active {
+  transform: scale(0.97);
+}#extraList {
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+#extraList.collapsed {
+  max-height: 0;
+}
+
+#extraList.expanded {
+  max-height: 500px;
 }
 
 /* RESPONSIVE */
@@ -338,8 +357,48 @@ Saat ini, PPSA. Darurrohman telah dilengkapi dengan fasilitas penunjang yang rep
 <p>
 Untuk mendukung potensi akademik dan spiritual, PPSA. Darurrohman menyelenggarakan kegiatan yang padat dan dinamis, meliputi menghafal Al-Qur’an (tahfizh), Madrasah Diniyah, musyawarah, kegiatan Jam’iyyah, dan berbagai pilihan ekstrakurikuler. Melalui konsistensi pendidikan ini, PPSA. Darurrohman sukses melahirkan generasi hafizh-hafizhah serta meluluskan santri terbaik setiap tahunnya.
 </p>
+<h3 onclick="toggleExtra()" style="cursor:pointer;">
+  EKSTRAKURIKULER 
+  <i class="bi bi-chevron-down arrow"></i>
+</h3>
+    <ul id="extraList" class="collapsed">
+      <li>Jam’iyyah Khitobah</li>
+      <li>Jam’iyyah Manaqib</li>
+      <li>Majlis Dzikrul Ghofilin</li>
+      <li>Majlis Khotmil Qur’an</li>
+      <li>Maulid</li>
+      <li>Tajhizul Mayyit</li>
+      <li>Praktek Ubudiyah</li>
+      <li>Sorogan Kitab</li>
+      <li>Sholawat</li>
+      <li>Al-Banjari</li>
+      <li>Komputer</li>
+      <li>Sepak Bola</li>
+    </ul>
 
-    <h3>ROUDLOTUL ALQURAN</h3>
+   <h3 onclick="toggleExtra()" style="cursor:pointer;">
+    UNIT PENDIDIKAN 
+  <i class="bi bi-chevron-down arrow"></i>
+</h3>
+    <ul id="extraList" class="collapsed">
+      <li>MHM</li>
+      <li>Roudlotul Qur’an</li>
+      <li>TPQ</li>
+      <li>Tartil</li>
+      <li>Al-Robithoh</li>
+      <li>Takhosus</li>
+      <li>Pengajian kitab</li>
+    </ul>
+  </div>
+
+  <!-- KOLOM KANAN -->
+  <div>
+     <div class="skills-grid">
+                <div class="skill-item" data-aos="zoom-in" data-aos-delay="400">
+                  <div class="skill-icon">
+                    <img src="assets/img/Logo/tahfidz.webp" alt="Roudlotul Qur'an" class="img-fluid">
+                  </div>                
+    <h3>ROUDLOTUL QURAN</h3>
     <p>Sebagai Unit pendidikan unggulan dibawah
 naungan pondok pesantren Sentono Agung
 Darurrohman, Roudlotul Qur’an hadir dengan
@@ -366,41 +425,36 @@ menghafal Al-Qur’an secara mendalam.
       <li>Khotmil Qur’an</li>
       <li>Sema’an</li>
     </ul>
+    </div>
   </div>
 
-  <!-- KOLOM KANAN -->
-  <div>
-    <h3>EKSTRAKURIKULER</h3>
-    <ul>
-      <li>Jam’iyyah Khitobah</li>
-      <li>Jam’iyyah Manaqib</li>
-      <li>Majlis Dzikrul Ghofilin</li>
-      <li>Majlis Khotmil Qur’an</li>
-      <li>Maulid</li>
-      <li>Tajhizul Mayyit</li>
-      <li>Praktek Ubudiyah</li>
-      <li>Sorogan Kitab</li>
-      <li>Sholawat</li>
-      <li>Al-Banjari</li>
-      <li>Komputer</li>
-      <li>Sepak Bola</li>
-    </ul>
+   <div>
+     <div class="skills-grid">
+                <div class="skill-item" data-aos="zoom-in" data-aos-delay="400">
+                  <div class="skill-icon">
+                    <img src="assets/img/Logo/MHM.webp" alt="Madrasah Hidayatul Mubtadi-ien" class="img-fluid">
+                  </div>                
+    <h3>MADRASAH HIDAYATUL MUBTADI-IEN</h3>
+    <p>Sebagai Unit pendidikan unggulan dibawah
+naungan pondok pesantren Sentono Agung
+Darurrohman, Madrasah Hidayatul Mubtadi-ien hadir dengan
+dedikasi untuk mencetak generasi santri yang
+kompeten. Kami membekali santri dengan
+penguasaan ilmu ilmu kitab kuning yang presisi untuk mencapai
+kemahiran dalam membaca, memahami, kitab secara mendalam.
 
-    <h3>UNIT PENDIDIKAN</h3>
+</p>
+
+    <h3>KEGIATAN MADRASAH HIDAYATUL MUBTADI-IEN</h3>
     <ul>
-      <li>MHM</li>
-      <li>Roudlotul Qur’an</li>
-      <li>TPQ</li>
-      <li>Tartil</li>
-      <li>Al-Robithoh</li>
-      <li>Takhosus</li>
-      <li>Pengajian kitab</li>
+      <li>Kegiatan Belajar Mengajar</li>
+      <li>Wajib Belajar</li>
+      <li>Muhafadzoh</li>
+      <li>Koreksian Kitab</li>
+      <li>Ujian</li>
+      <li>ujian Praktek</li>
     </ul>
-  </div>
-  <div class="btn-wrapper">
-    <button class="btn-info" onclick="window.location.href='menu.html'">
-      Keterangan Lebih Lanjut
-    </button>
+    </div>
   </div>
 </div> <!-- profil-container -->
     </div> 
@@ -414,7 +468,6 @@ menghafal Al-Qur’an secara mendalam.
 <!-- ===========================
      JENJANG PENDIDIKAN
 =========================== -->
-
 <section class="section-padding">
     <div class="container">
 
@@ -577,6 +630,11 @@ menghafal Al-Qur’an secara mendalam.
 
         </div>
 
+    </div>
+    <div class="btn-wrapper">
+      <a href="menu.html" class="btn-info">
+         Lihat Selengkapnya →
+        </a>
     </div>
 </section>
 
@@ -1184,7 +1242,19 @@ document.getElementById("toggleBtn").onclick = function() {
   document.getElementById("navmenu").classList.toggle("active");
 };
 </script>
+<script>
+function toggleExtra() {
+  const list = document.getElementById("extraList");
 
+  if (list.classList.contains("collapsed")) {
+    list.classList.remove("collapsed");
+    list.classList.add("expanded");
+  } else {
+    list.classList.remove("expanded");
+    list.classList.add("collapsed");
+  }
+}
+</script>
 </body>
 
 </html>
