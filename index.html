@@ -7,7 +7,7 @@
   <title>Pondok Pesantren Sentono Agung Darurrohman</title>
   <meta name="description" content="Pondok Pesantren Sentono Agung Darurrohman - Pendaftaran santri baru, informasi biaya, tata tertib, dan profil pesantren.">
   <meta name="keywords" content="pesantren darurrohman, pendaftaran santri, pondok pesantren, pendidikan islam">
-
+  <meta name="color-scheme" content="light dark">
   <!-- Preconnect -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -180,6 +180,89 @@ th, td {
   scroll-behavior: smooth;
 }section {
   scroll-margin-top: 90px;
+}
+/* =========================
+   DARK MODE
+========================= */
+@media (prefers-color-scheme: dark) {
+
+  body {
+    background: linear-gradient(to right, #0f172a, #1e293b) !important;
+    color: #e2e8f0 !important;
+  }
+
+  section {
+    background: transparent !important;
+  }
+
+  /* CARD / BOX */
+  .profil-container > div,
+  .card,
+  .accordion-item,
+  .experience-card {
+    background: rgba(255,255,255,0.05) !important;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: none !important;
+  }
+
+  /* TEXT */
+  h1, h2, h3, h4, h5, h6, p, li, span, a {
+    color: #f1f5f9 !important;
+  }
+
+  /* NAV */
+  .navmenu {
+    background: #0f172a !important;
+  }
+
+  /* HERO */
+  .hero {
+    background: transparent !important;
+  }
+
+  /* BUTTON */
+  .btn,
+  .btn-info {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
+    color: white !important;
+    border: none !important;
+  }
+
+  .btn-outline {
+    border: 1px solid rgba(255,255,255,0.4) !important;
+    color: white !important;
+  }
+
+  /* TABLE */
+  table {
+    color: white !important;
+  }
+
+  .table {
+    background: rgba(255,255,255,0.03) !important;
+  }
+
+  .table thead {
+    background: rgba(79,70,229,0.3) !important;
+    color: white !important;
+  }
+
+  /* CONTACT */
+  .contact-item p {
+    color: #cbd5f5 !important;
+  }
+
+  /* ICON */
+  .contact-item i {
+    background: rgba(255,255,255,0.1) !important;
+  }
+
+  /* IMAGE */
+  img {
+    filter: brightness(0.9) contrast(1.05);
+  }
+
 }
 
 /* RESPONSIVE */
