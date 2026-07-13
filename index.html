@@ -166,17 +166,20 @@ th, td {
 
 .btn-info:active {
   transform: scale(0.97);
-}#extraList {
+}.collapsed {
+  max-height: 0;
   overflow: hidden;
   transition: max-height 0.4s ease;
 }
 
-#extraList.collapsed {
-  max-height: 0;
-}
-
-#extraList.expanded {
-  max-height: 500px;
+.expanded {
+  max-height: 1000px;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}html {
+  scroll-behavior: smooth;
+}section {
+  scroll-margin-top: 90px;
 }
 
 /* RESPONSIVE */
@@ -357,11 +360,11 @@ Saat ini, PPSA. Darurrohman telah dilengkapi dengan fasilitas penunjang yang rep
 <p>
 Untuk mendukung potensi akademik dan spiritual, PPSA. Darurrohman menyelenggarakan kegiatan yang padat dan dinamis, meliputi menghafal Al-Qur’an (tahfizh), Madrasah Diniyah, musyawarah, kegiatan Jam’iyyah, dan berbagai pilihan ekstrakurikuler. Melalui konsistensi pendidikan ini, PPSA. Darurrohman sukses melahirkan generasi hafizh-hafizhah serta meluluskan santri terbaik setiap tahunnya.
 </p>
-<h3 onclick="toggleExtra()" style="cursor:pointer;">
-  EKSTRAKURIKULER 
-  <i class="bi bi-chevron-down arrow"></i>
+<h3 onclick="toggleExtra('extra1')" style="cursor:pointer;">
+  EKSTRAKURIKULER
+   <i class="bi bi-chevron-down arrow"></i>
 </h3>
-    <ul id="extraList" class="collapsed">
+<ul id="extra1" class="collapsed">
       <li>Jam’iyyah Khitobah</li>
       <li>Jam’iyyah Manaqib</li>
       <li>Majlis Dzikrul Ghofilin</li>
@@ -376,11 +379,11 @@ Untuk mendukung potensi akademik dan spiritual, PPSA. Darurrohman menyelenggarak
       <li>Sepak Bola</li>
     </ul>
 
-   <h3 onclick="toggleExtra()" style="cursor:pointer;">
-    UNIT PENDIDIKAN 
-  <i class="bi bi-chevron-down arrow"></i>
-</h3>
-    <ul id="extraList" class="collapsed">
+  <h3 onclick="toggleExtra('extra2')" style="cursor:pointer;">
+    UNIT PENDIDIKAN
+     <i class="bi bi-chevron-down arrow"></i>
+  </h3>
+  <ul id="extra2" class="collapsed">
       <li>MHM</li>
       <li>Roudlotul Qur’an</li>
       <li>TPQ</li>
@@ -435,14 +438,9 @@ menghafal Al-Qur’an secara mendalam.
                     <img src="assets/img/Logo/MHM.webp" alt="Madrasah Hidayatul Mubtadi-ien" class="img-fluid">
                   </div>                
     <h3>MADRASAH HIDAYATUL MUBTADI-IEN</h3>
-    <p>Sebagai Unit pendidikan unggulan dibawah
+    <p>Sebagai Madrasah Diniyah dibawah
 naungan pondok pesantren Sentono Agung
-Darurrohman, Madrasah Hidayatul Mubtadi-ien hadir dengan
-dedikasi untuk mencetak generasi santri yang
-kompeten. Kami membekali santri dengan
-penguasaan ilmu ilmu kitab kuning yang presisi untuk mencapai
-kemahiran dalam membaca, memahami, kitab secara mendalam.
-
+Darurrohman
 </p>
 
     <h3>KEGIATAN MADRASAH HIDAYATUL MUBTADI-IEN</h3>
@@ -468,7 +466,7 @@ kemahiran dalam membaca, memahami, kitab secara mendalam.
 <!-- ===========================
      JENJANG PENDIDIKAN
 =========================== -->
-<section class="section-padding">
+<section id="jenjang" class="section-padding">
     <div class="container">
 
        <div class="container section-title">
@@ -741,7 +739,7 @@ kemahiran dalam membaca, memahami, kitab secara mendalam.
     <div class="card shadow-lg border-0 rounded-4 p-4 mb-5">
       
       <h3 class="text-center fw-bold mb-4">
-        Perincian Pendaftaran
+        Rincian Pendaftaran
       </h3>
 
       <!-- TABEL PERTAMA  -->
@@ -1243,15 +1241,15 @@ document.getElementById("toggleBtn").onclick = function() {
 };
 </script>
 <script>
-function toggleExtra() {
-  const list = document.getElementById("extraList");
+function toggleExtra(id) {
+  const el = document.getElementById(id);
 
-  if (list.classList.contains("collapsed")) {
-    list.classList.remove("collapsed");
-    list.classList.add("expanded");
+  if (el.classList.contains("collapsed")) {
+    el.classList.remove("collapsed");
+    el.classList.add("expanded");
   } else {
-    list.classList.remove("expanded");
-    list.classList.add("collapsed");
+    el.classList.remove("expanded");
+    el.classList.add("collapsed");
   }
 }
 </script>
